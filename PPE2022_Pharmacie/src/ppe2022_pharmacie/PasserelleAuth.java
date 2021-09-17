@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ppe2022_pharmacie;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**
- *
- * @author sio2021
- */
 public class PasserelleAuth {
     private static String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
     private static String user = "potier";
