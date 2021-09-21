@@ -110,4 +110,24 @@ public class PasserelleAuth {
         }
         return lesStocks;
     }
+    
+    public void CreaDemande(Demande uneDemande) {
+        if (pdo == null) {
+            Connection();
+        }
+        try{
+            String requete = "insert into demande values (?, ?, ?, ?)";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setInt(1, uneDemande.getIdD());
+            prepare.setInt(2, uneDemande.getIdS());
+            prepare.setInt(3, uneDemande.getIdM());
+            prepare.setInt(4, uneDemande.getQtte());
+            int res = prepare.executeUpdate();   
+        }
+        catch(Exception e){
+            
+        }
+        
+
+    }
 }
