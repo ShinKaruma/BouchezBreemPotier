@@ -28,9 +28,9 @@ public class Authentification extends javax.swing.JFrame {
     private void initComponents() {
 
         txtLogin = new java.awt.TextField();
-        txtPasse = new java.awt.TextField();
         btnConnexion = new javax.swing.JButton();
         lblOutput = new javax.swing.JLabel();
+        pwdPasse = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,19 +46,14 @@ public class Authentification extends javax.swing.JFrame {
             }
         });
 
-        txtPasse.setText("Mot de Passe");
-        txtPasse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtPasseMouseClicked(evt);
-            }
-        });
-
         btnConnexion.setText("Se connecter");
         btnConnexion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnConnexionMouseClicked(evt);
             }
         });
+
+        pwdPasse.setText("jPasswordField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,14 +63,14 @@ public class Authentification extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnConnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPasse, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 81, Short.MAX_VALUE)))
+                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                            .addComponent(pwdPasse))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -83,9 +78,9 @@ public class Authentification extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pwdPasse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPasse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConnexion)
                     .addComponent(lblOutput))
@@ -101,22 +96,20 @@ public class Authentification extends javax.swing.JFrame {
 
     private void btnConnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnexionMouseClicked
         String login = txtLogin.getText();
-        String passe = txtPasse.getText();
-        int[] info = PasserelleAuth.Authentification(login, passe);
-        if(info[0]==0){
-            lblOutput.setText("Erreur dans le couple Login/mdp");
-        }else{
-            lblOutput.setText("Connexion Effectuee");
-        }
+        String passe = "";
+        char[] passeChar = pwdPasse.getPassword();
+        
+//        int[] info = PasserelleAuth.Authentification(login, passe);
+//        if(info[0]==0){
+//            lblOutput.setText("Erreur dans le couple Login/mdp");
+//        }else{
+//            lblOutput.setText("Connexion Effectuee");
+//        }
     }//GEN-LAST:event_btnConnexionMouseClicked
 
     private void txtLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoginMouseClicked
         txtLogin.setText("");
     }//GEN-LAST:event_txtLoginMouseClicked
-
-    private void txtPasseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasseMouseClicked
-        txtPasse.setText("");
-    }//GEN-LAST:event_txtPasseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -156,7 +149,7 @@ public class Authentification extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConnexion;
     private javax.swing.JLabel lblOutput;
+    private javax.swing.JPasswordField pwdPasse;
     private java.awt.TextField txtLogin;
-    private java.awt.TextField txtPasse;
     // End of variables declaration//GEN-END:variables
 }

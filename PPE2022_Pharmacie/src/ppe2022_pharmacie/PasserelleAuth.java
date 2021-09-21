@@ -38,19 +38,25 @@ public class PasserelleAuth {
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "Select count(*), droits from authentification where login ='"+login+"' and passe='"+password+"' group by droits";
+            String requete = "Select count(*), droits from authentification where login ='" + login + "' and passe='" + password + "' group by droits";
             ResultSet authResultat = state.executeQuery(requete);
-            if(authResultat.next()){
-//                System.out.println(authResultat.getInt(2));
+            if (authResultat.next()) {
                 infos[0] = authResultat.getInt(1);
                 infos[1] = authResultat.getInt(2);
             }
-            
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Erreur Dans la connexion");
         }
         return infos;
+    }
+
+    public static String getHashMdp(String login) {
+        if (pdo == null) {
+            Connection();
+        }
+        
     }
 
     public static ArrayList<Stock> donnerTousLesStocks() {
