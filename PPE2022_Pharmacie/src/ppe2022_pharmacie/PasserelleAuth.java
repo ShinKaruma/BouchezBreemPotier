@@ -7,18 +7,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class PasserelleAuth {
+
     private static String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
     private static String user = "potier";
     private static String passwd = "potier";
     private static Connection pdo;
-    
-    
-    public PasserelleAuth(String pUrl, String pUser, String pPasswd){
+
+    public PasserelleAuth(String pUrl, String pUser, String pPasswd) {
         url = pUrl;
         user = pUser;
         passwd = pPasswd;
     }
-    
+
     public static void Connection() {
         //Etablir connexion
         try {
@@ -30,7 +30,29 @@ public class PasserelleAuth {
             System.out.println(e.getMessage());
         }
     }
-    
+
+    public static int[] Authentification(String login, String password) {
+        int[] infos = new int[2];
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "Select count(*), droits from authentification where login ='"+login+"' and passe='"+password+"' group by droits";
+            ResultSet authResultat = state.executeQuery(requete);
+            if(authResultat.next()){
+//                System.out.println(authResultat.getInt(2));
+                infos[0] = authResultat.getInt(1);
+                infos[1] = authResultat.getInt(2);
+            }
+            
+        }catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur Dans la connexion");
+        }
+        return infos;
+    }
+
     public static ArrayList<Stock> donnerTousLesStocks() {
         if (pdo == null) {
             Connection();
@@ -56,7 +78,7 @@ public class PasserelleAuth {
         }
         return lesStocks;
     }
-    
+
     public static ArrayList<Stock> donnerStockSeuil() {
         if (pdo == null) {
             Connection();
