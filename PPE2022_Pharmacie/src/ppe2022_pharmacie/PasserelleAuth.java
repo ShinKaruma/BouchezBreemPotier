@@ -60,13 +60,15 @@ public class PasserelleAuth {
         ArrayList<Stock> lesStocks = new ArrayList<Stock>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from \"Stock\"";
+            String requete = "select * from stock";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
                 String libelle = stockResultat.getString(2);
                 int qtteStock = stockResultat.getInt(3);
-                Stock unStock = new Stock(id, libelle, qtteStock);
+                int seuil = stockResultat.getInt(4);
+                String categorie = stockResultat.getString(5);
+                Stock unStock = new Stock(id, libelle, qtteStock, seuil, categorie);
                 lesStocks.add(unStock);
             }
             stockResultat.close();
@@ -86,13 +88,15 @@ public class PasserelleAuth {
         ArrayList<Stock> lesStocks = new ArrayList<Stock>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from \"Stock\" where qtte <= 100";
+            String requete = "select * from stock where qtte <= seuil";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
                 String libelle = stockResultat.getString(2);
                 int qtteStock = stockResultat.getInt(3);
-                Stock unStock = new Stock(id, libelle, qtteStock);
+                int seuil = stockResultat.getInt(4);
+                String categorie = stockResultat.getString(5);
+                Stock unStock = new Stock(id, libelle, qtteStock, seuil, categorie);
                 lesStocks.add(unStock);
             }
             stockResultat.close();
@@ -103,5 +107,29 @@ public class PasserelleAuth {
             System.out.println("Erreur donner tous les stocks");
         }
         return lesStocks;
+    }
+    
+    public static ArrayList<String> donnerCategorie() {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList ArrayCategorie = new ArrayList();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select distinct categorie from stock";
+            ResultSet stockResultat = state.executeQuery(requete);
+            while (stockResultat.next()) {
+                String categorie = stockResultat.getString(1);
+//                Stock unStock = new Stock(categorie);
+                ArrayCategorie.add(categorie);
+            }
+            stockResultat.close();
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner tous les stocks");
+        }
+        return ArrayCategorie;
     }
 }

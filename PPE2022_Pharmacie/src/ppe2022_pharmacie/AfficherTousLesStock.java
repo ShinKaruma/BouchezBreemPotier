@@ -3,6 +3,7 @@ package ppe2022_pharmacie;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class AfficherTousLesStock extends javax.swing.JFrame {
 
@@ -19,6 +20,11 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
+        
+        ArrayList<String> ArrayCategorie = PasserelleAuth.donnerCategorie();
+        for(String s: ArrayCategorie){
+            cbxCategorie.addItem(s);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +40,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         lstAfficherTous1 = new javax.swing.JList<>();
         btnActualiser2 = new javax.swing.JButton();
         btnActualiser3 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         lblTitre = new javax.swing.JLabel();
         lblAfficherTous = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -41,6 +51,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lstAfficherTous = new javax.swing.JList<>();
         btnSeuil = new javax.swing.JButton();
+        cbxCategorie = new javax.swing.JComboBox<>();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +166,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton1.setText("jRadioButton1");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblTitre.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -214,12 +229,29 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             }
         });
 
+        cbxCategorie.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cbxCategorie.setForeground(new java.awt.Color(255, 51, 51));
+        cbxCategorie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCategorieActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(226, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnActualiser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(71, 71, 71))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,18 +259,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(lblAfficherTous))
                             .addComponent(lblTitre))
-                        .addGap(224, 224, 224))
+                        .addGap(316, 316, 316))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnActualiser)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnSeuil)
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton1)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,13 +272,17 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAfficherTous)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActualiser)
-                    .addComponent(jButton1)
-                    .addComponent(btnSeuil))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnActualiser)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSeuil, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -273,6 +301,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualiserActionPerformed
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
+
         unStock = PasserelleAuth.donnerTousLesStocks();
 
         DefaultListModel listModel = new DefaultListModel();
@@ -283,9 +312,9 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualiserMouseClicked
 
     private void lstAfficherTousMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstAfficherTousMouseClicked
-        int choix=lstAfficherTous.getSelectedIndex();
-        Object val= lstAfficherTous.getModel().getElementAt(choix);
-        Stock unPdt=(Stock) val;
+        int choix = lstAfficherTous.getSelectedIndex();
+        Object val = lstAfficherTous.getModel().getElementAt(choix);
+        Stock unPdt = (Stock) val;
     }//GEN-LAST:event_lstAfficherTousMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -338,6 +367,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSeuilActionPerformed
 
+    private void cbxCategorieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategorieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxCategorieActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -377,9 +410,14 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private javax.swing.JButton btnActualiser2;
     private javax.swing.JButton btnActualiser3;
     private javax.swing.JButton btnSeuil;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JComboBox<String> cbxCategorie;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAfficherTous;

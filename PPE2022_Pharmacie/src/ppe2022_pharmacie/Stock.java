@@ -5,12 +5,16 @@ public class Stock {
     private int id;
     private String libelle;
     private int qtteStock;
+    private int seuil;
+    private String categorie;
     
     //Constructeur
-    public Stock(int pId, String pLibelle, int pQtteStock){
+    public Stock(int pId, String pLibelle, int pQtteStock, int pSeuil, String pCategorie){
         id = pId;
         libelle = pLibelle;
         qtteStock = pQtteStock;
+        seuil = pSeuil;
+        categorie = pCategorie;
     }
     
     //Accesseur
@@ -27,6 +31,14 @@ public class Stock {
         return qtteStock;
     }
     
+    public int getSeuil() {
+        return seuil;
+    }
+    
+    public String getCategorie() {
+        return categorie;
+    }
+    
     //Mutateur
 
     public void setId(int id) {
@@ -41,11 +53,19 @@ public class Stock {
         this.qtteStock = qtteStock;
     }
     
+    public void setSeuil(int seuil) {
+        this.seuil = seuil;
+    }
+    
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+    
     //Méthode
 
     @Override
     public String toString() {
-        return "| id: "+id+" | Libelle: "+libelle+" | Quantitée en Stock: "+qtteStock+"\n";
+        return "| id: "+id+" | Libelle: "+libelle+" | Quantitée en Stock: "+qtteStock+" | Seuil: "+seuil+" | Categorie: "+categorie+"\n";
     }
     
 }
