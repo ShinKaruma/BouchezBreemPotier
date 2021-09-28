@@ -27,16 +27,16 @@
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="lblOutput" max="32767" attributes="0"/>
+                      <Component id="lblOutput" pref="174" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnConnexion" min="-2" pref="109" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtLogin" max="32767" attributes="0"/>
-                          <Component id="txtPasse" min="-2" pref="220" max="-2" attributes="0"/>
+                          <Component id="txtLogin" pref="220" max="32767" attributes="0"/>
+                          <Component id="pwdPasse" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="81" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -48,9 +48,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace pref="20" max="32767" attributes="0"/>
               <Component id="txtLogin" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Component id="pwdPasse" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtPasse" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnConnexion" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblOutput" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -72,16 +72,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>
       </Events>
     </Component>
-    <Component class="java.awt.TextField" name="txtPasse">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Mot de Passe&quot;" type="code"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtPasseMouseClicked"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnConnexion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Se connecter"/>
@@ -91,6 +81,11 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblOutput">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="pwdPasse">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
