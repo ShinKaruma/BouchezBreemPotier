@@ -20,9 +20,9 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
-        
+
         ArrayList<String> ArrayCategorie = PasserelleAuth.donnerCategorie();
-        for(String s: ArrayCategorie){
+        for (String s : ArrayCategorie) {
             cbxCategorie.addItem(s);
         }
     }
@@ -52,6 +52,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         lstAfficherTous = new javax.swing.JList<>();
         btnSeuil = new javax.swing.JButton();
         cbxCategorie = new javax.swing.JComboBox<>();
+        btnCategorie = new javax.swing.JButton();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -237,6 +238,20 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             }
         });
 
+        btnCategorie.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnCategorie.setForeground(new java.awt.Color(255, 51, 51));
+        btnCategorie.setText("Lister par catégorie");
+        btnCategorie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCategorieMouseClicked(evt);
+            }
+        });
+        btnCategorie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategorieActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,12 +259,18 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnActualiser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbxCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(71, 71, 71))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnActualiser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(71, 71, 71))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(42, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +300,9 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnSeuil, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -371,6 +394,30 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCategorieActionPerformed
 
+    private void btnCategorieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategorieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCategorieActionPerformed
+
+    private void btnCategorieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCategorieMouseClicked
+        // TODO add your handling code here:
+        String Tous = "Tous";
+        if (cbxCategorie.getSelectedItem() == Tous) {
+            DefaultListModel listModel = new DefaultListModel();
+            for (Stock pdt : PasserelleAuth.donnerTousLesStocks()) {
+                listModel.addElement(pdt);
+            }
+            lstAfficherTous.setModel(listModel);
+        } else {
+            DefaultListModel listModel = new DefaultListModel();
+            for (Stock pdt : PasserelleAuth.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
+                listModel.addElement(pdt);
+            }
+            lstAfficherTous.setModel(listModel);
+        }
+
+
+    }//GEN-LAST:event_btnCategorieMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -409,6 +456,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private javax.swing.JButton btnActualiser1;
     private javax.swing.JButton btnActualiser2;
     private javax.swing.JButton btnActualiser3;
+    private javax.swing.JButton btnCategorie;
     private javax.swing.JButton btnSeuil;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;

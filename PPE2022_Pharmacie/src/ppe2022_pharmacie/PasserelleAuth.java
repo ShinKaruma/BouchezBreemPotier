@@ -1,4 +1,4 @@
-﻿package ppe2022_pharmacie;
+package ppe2022_pharmacie;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,12 +52,11 @@ public class PasserelleAuth {
         return infos;
     }
 
-    public static String getHashMdp(String login) {
-        if (pdo == null) {
-            Connection();
-        }
-        
-    }
+//    public static String getHashMdp(String login) {
+//        if (pdo == null) {
+//            Connection();
+//        }
+//    }
 
     public static ArrayList<Stock> donnerTousLesStocks() {
         if (pdo == null) {
@@ -124,6 +123,8 @@ public class PasserelleAuth {
             Statement state = pdo.createStatement();
             String requete = "select distinct categorie from stock";
             ResultSet stockResultat = state.executeQuery(requete);
+            String Tous = "Tous";
+            ArrayCategorie.add(Tous);
             while (stockResultat.next()) {
                 String categorie = stockResultat.getString(1);
 //                Stock unStock = new Stock(categorie);
@@ -137,22 +138,50 @@ public class PasserelleAuth {
             System.out.println("Erreur donner tous les stocks");
         }
         return ArrayCategorie;
-}  
-    public void CreaDemande(Demande uneDemande) {
+    }  
+    
+    public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         if (pdo == null) {
             Connection();
         }
-        try{
-            String requete = "insert into demande values (?, ?, ?, ?)";
-            PreparedStatement prepare = pdo.prepareStatement(requete);
-            prepare.setInt(1, uneDemande.getIdD());
-            prepare.setInt(2, uneDemande.getIdS());
-            prepare.setInt(3, uneDemande.getIdM());
-            prepare.setInt(4, uneDemande.getQtte());
-            int res = prepare.executeUpdate();   
+        ArrayList<Stock> lesStocks = new ArrayList<Stock>();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select * from stock where categorie = \'"+pCategorie+"\'";
+            ResultSet stockResultat = state.executeQuery(requete);
+            while (stockResultat.next()) {
+                int id = stockResultat.getInt(1);
+                String libelle = stockResultat.getString(2);
+                int qtteStock = stockResultat.getInt(3);
+                int seuil = stockResultat.getInt(4);
+                String categorie = stockResultat.getString(5);
+                Stock unStock = new Stock(id, libelle, qtteStock, seuil, categorie);
+                lesStocks.add(unStock);
+            }
+            stockResultat.close();
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner tous les stocks");
         }
-        catch(Exception e){
-            
-        }
+        return lesStocks;
     }
+//    public void CreaDemande(Demande uneDemande) {
+//        if (pdo == null) {
+//            Connection();
+//        }
+//        try{
+//            String requete = "insert into demande values (?, ?, ?, ?)";
+//            PreparedStatement prepare = pdo.prepareStatement(requete);
+//            prepare.setInt(1, uneDemande.getIdD());
+//            prepare.setInt(2, uneDemande.getIdS());
+//            prepare.setInt(3, uneDemande.getIdM());
+//            prepare.setInt(4, uneDemande.getQtte());
+//            int res = prepare.executeUpdate();   
+//        }
+//        catch(Exception e){
+//            
+//        }
+//    }
 }
