@@ -52,11 +52,25 @@ public class PasserelleAuth {
         return infos;
     }
 
-//    public static String getHashMdp(String login) {
-//        if (pdo == null) {
-//            Connection();
-//        }
-//    }
+    public static String getHashMdp(String login) {
+        String info = "";
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select passe from authentification where login = '" + login + "'";
+            ResultSet authResultat = state.executeQuery(requete);
+            if (authResultat.next()) {
+                info = authResultat.getString(1);
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la récupération du mdp");
+        }
+        return info;
+    }
 
     public static ArrayList<Stock> donnerTousLesStocks() {
         if (pdo == null) {
@@ -113,7 +127,7 @@ public class PasserelleAuth {
         }
         return lesStocks;
     }
-    
+
     public static ArrayList<String> donnerCategorie() {
         if (pdo == null) {
             Connection();
@@ -138,8 +152,8 @@ public class PasserelleAuth {
             System.out.println("Erreur donner tous les stocks");
         }
         return ArrayCategorie;
-    }  
-    
+    }
+
     public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         if (pdo == null) {
             Connection();
@@ -147,7 +161,7 @@ public class PasserelleAuth {
         ArrayList<Stock> lesStocks = new ArrayList<Stock>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock where categorie = \'"+pCategorie+"\'";
+            String requete = "select * from stock where categorie = \'" + pCategorie + "\'";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);

@@ -5,6 +5,12 @@
  */
 package ppe2022_pharmacie;
 
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.DatatypeConverter;
+import sun.security.provider.MD5;
 /**
  *
  * @author hbana
@@ -97,14 +103,25 @@ public class Authentification extends javax.swing.JFrame {
     private void btnConnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnexionMouseClicked
         String login = txtLogin.getText();
         String passe = "";
-        char[] passeChar = pwdPasse.getPassword();
-        
+//        char[] passeChar = pwdPasse.getPassword();
+//        System.out.println(PasserelleAuth.getHashMdp(login));
 //        int[] info = PasserelleAuth.Authentification(login, passe);
 //        if(info[0]==0){
 //            lblOutput.setText("Erreur dans le couple Login/mdp");
 //        }else{
 //            lblOutput.setText("Connexion Effectuee");
 //        }
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte raw[] = md.digest(login.getBytes("UTF-8"));
+            String hash;
+            hash = DatatypeConverter.printHexBinary(raw);
+            System.out.println(hash);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Authentification.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Authentification.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnConnexionMouseClicked
 
     private void txtLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoginMouseClicked
