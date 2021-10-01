@@ -176,7 +176,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         lblTitre.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblTitre.setForeground(new java.awt.Color(255, 51, 51));
         lblTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitre.setText("Gestion Stock");
+        lblTitre.setText("Gestion Stock Medicament");
 
         lblAfficherTous.setText("Afficher tous les produits");
 
@@ -275,15 +275,14 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(lblAfficherTous))
-                            .addComponent(lblTitre))
-                        .addGap(316, 316, 316))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblTitre)
+                        .addGap(259, 259, 259))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblAfficherTous)
+                        .addGap(348, 348, 348))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,6 +337,8 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         int choix = lstAfficherTous.getSelectedIndex();
         Object val = lstAfficherTous.getModel().getElementAt(choix);
         Stock unPdt = (Stock) val;
+        
+        PasserCommande g= new PasserCommande(unPdt);g.setVisible(true);
     }//GEN-LAST:event_lstAfficherTousMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
