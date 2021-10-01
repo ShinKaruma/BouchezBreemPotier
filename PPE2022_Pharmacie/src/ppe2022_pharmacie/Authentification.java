@@ -62,6 +62,11 @@ public class Authentification extends javax.swing.JFrame {
         });
 
         pwdPasse.setText("jPasswordField1");
+        pwdPasse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pwdPasseMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,7 +123,7 @@ public class Authentification extends javax.swing.JFrame {
             int[] info = PasserelleAuth.Authentification(login, hash);
             String service = PasserelleAuth.getService(info[1]);
             
-            Utilisateur unUtilisateur = new Utilisateur(login, service, info[1]);
+            Utilisateur unUtilisateur = new Utilisateur(login, service, info[1], info[2]);
             
             if (info[0] == 0) {
                 lblOutput.setText("Erreur dans le couple Login/mdp");
@@ -130,7 +135,7 @@ public class Authentification extends javax.swing.JFrame {
                     case 1:
                         break;
                     case 2:
-                        new AfficherTousLesStock().setVisible(true);
+                        new AfficherTousLesStock(unUtilisateur).setVisible(true);
                         this.dispose();
                     default:
                 }
@@ -145,6 +150,10 @@ public class Authentification extends javax.swing.JFrame {
     private void txtLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoginMouseClicked
         txtLogin.setText("");
     }//GEN-LAST:event_txtLoginMouseClicked
+
+    private void pwdPasseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwdPasseMouseClicked
+        pwdPasse.setText("");
+    }//GEN-LAST:event_pwdPasseMouseClicked
 
     /**
      * @param args the command line arguments

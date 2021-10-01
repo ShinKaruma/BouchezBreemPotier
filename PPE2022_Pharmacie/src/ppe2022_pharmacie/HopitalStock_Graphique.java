@@ -90,7 +90,7 @@ public class HopitalStock_Graphique extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuitterMouseClicked
 
     private void btnAfficherTousMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAfficherTousMouseClicked
-        AfficherTousLesStock g= new AfficherTousLesStock();g.setVisible(true);
+//        AfficherTousLesStock g= new AfficherTousLesStock();g.setVisible(true);
     }//GEN-LAST:event_btnAfficherTousMouseClicked
 
     /**

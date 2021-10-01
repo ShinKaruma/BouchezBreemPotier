@@ -39,17 +39,18 @@ public class PasserelleAuth {
     }
 
     public static int[] Authentification(String login, String password) {
-        int[] infos = new int[2];
+        int[] infos = new int[3];
         if (pdo == null) {
             Connection();
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "Select count(*), service from authentification where login ='" + login + "' and passe='" + password + "' group by service";
+            String requete = "Select count(*), service, idpersonnel from authentification where login ='" + login + "' and passe='" + password + "' group by service";
             ResultSet authResultat = state.executeQuery(requete);
             if (authResultat.next()) {
                 infos[0] = authResultat.getInt(1);
                 infos[1] = authResultat.getInt(2);
+                infos[2] = authResultat.getInt(3);
             }
 
         } catch (Exception e) {
@@ -244,5 +245,31 @@ public class PasserelleAuth {
             System.out.println("Erreur dans la récupération du service");
         }
         return service;
+    }
+    
+    public static ArrayList<Utilisateur> getTousLesUser(){
+        String requete = "select login, service.libelle, service, idpersonnel from authentification join service on authentification.service = service.idservice";
+        ArrayList<Utilisateur> lesUsers = new ArrayList<>();
+        try{
+            Statement state = pdo.createStatement();
+            ResultSet userResultat = state.executeQuery(requete);
+            while (userResultat.next()) {
+                String login =  userResultat.getString(1);
+                String service = userResultat.getString(2);
+                int idService = userResultat.getInt(3);
+                int idUser = userResultat.getInt(4);
+                
+                lesUsers.add(new Utilisateur(login, service, idService, idUser));
+                System.out.println(lesUsers.toString());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la récupération des users");
+        }
+        return lesUsers;
+    }
+    
+    public static void delUnUser(int idUser){
+        String requete = "delete from authentification where idpersonnel=";
     }
 }
