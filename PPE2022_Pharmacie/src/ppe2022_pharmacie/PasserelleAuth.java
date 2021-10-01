@@ -1,10 +1,17 @@
 package ppe2022_pharmacie;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.DatatypeConverter;
 
 public class PasserelleAuth {
 
@@ -38,7 +45,7 @@ public class PasserelleAuth {
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "Select count(*), droits from authentification where login ='" + login + "' and passe='" + password + "' group by droits";
+            String requete = "Select count(*), service from authentification where login ='" + login + "' and passe='" + password + "' group by service";
             ResultSet authResultat = state.executeQuery(requete);
             if (authResultat.next()) {
                 infos[0] = authResultat.getInt(1);
@@ -198,4 +205,44 @@ public class PasserelleAuth {
 //            
 //        }
 //    }
+    
+    
+    public static void ajouterUtilisateur(String login, String passe, int service){
+        if (pdo == null) {
+            Connection();
+        }
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte raw[] = md.digest(passe.getBytes("UTF-8"));
+            String hash;
+            hash = DatatypeConverter.printHexBinary(raw);
+            System.out.println(hash);
+            
+            String requete = "insert into authentification (login, passe, service) values(?, ?, ?)";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setString(1, login);
+            prepare.setString(2, hash);
+            prepare.setInt(3, service);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans l'ajout d'un utilisateur");
+        }
+    }
+    
+    public static String getService(int idService){
+        String requete = "select libelle from service where idservice = "+idService;
+        String service = "";
+        try{
+            Statement state = pdo.createStatement();
+            ResultSet serviceResultat = state.executeQuery(requete);
+            if (serviceResultat.next()) {
+                service =  serviceResultat.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la récupération du service");
+        }
+        return service;
+    }
 }

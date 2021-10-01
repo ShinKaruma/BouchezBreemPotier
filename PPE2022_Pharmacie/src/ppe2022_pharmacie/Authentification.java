@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
 import sun.security.provider.MD5;
+
 /**
  *
  * @author hbana
@@ -22,6 +23,7 @@ public class Authentification extends javax.swing.JFrame {
      */
     public Authentification() {
         initComponents();
+        PasserelleAuth.Connection();
     }
 
     /**
@@ -103,20 +105,36 @@ public class Authentification extends javax.swing.JFrame {
     private void btnConnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnexionMouseClicked
         String login = txtLogin.getText();
         String passe = "";
-//        char[] passeChar = pwdPasse.getPassword();
-//        System.out.println(PasserelleAuth.getHashMdp(login));
-//        int[] info = PasserelleAuth.Authentification(login, passe);
-//        if(info[0]==0){
-//            lblOutput.setText("Erreur dans le couple Login/mdp");
-//        }else{
-//            lblOutput.setText("Connexion Effectuee");
-//        }
+        char[] passeChar = pwdPasse.getPassword();
+        for (char unChar : passeChar) {
+            passe += unChar;
+        }
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte raw[] = md.digest(login.getBytes("UTF-8"));
+            byte raw[] = md.digest(passe.getBytes("UTF-8"));
             String hash;
             hash = DatatypeConverter.printHexBinary(raw);
-            System.out.println(hash);
+
+            int[] info = PasserelleAuth.Authentification(login, hash);
+            String service = PasserelleAuth.getService(info[1]);
+            
+            Utilisateur unUtilisateur = new Utilisateur(login, service, info[1]);
+            
+            if (info[0] == 0) {
+                lblOutput.setText("Erreur dans le couple Login/mdp");
+            } else {
+                lblOutput.setText("Connexion Effectuee");
+                switch(info[1]){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        new AfficherTousLesStock().setVisible(true);
+                        this.dispose();
+                    default:
+                }
+            }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Authentification.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
