@@ -203,7 +203,8 @@ public class PasserelleAuth {
 //            int res = prepare.executeUpdate();   
 //        }
 //        catch(Exception e){
-//            
+//            System.out.println(e);
+//            System.out.println("Erreur insertion demande");
 //        }
 //    }
     
@@ -271,5 +272,65 @@ public class PasserelleAuth {
     
     public static void delUnUser(int idUser){
         String requete = "delete from authentification where idpersonnel=";
+    public static void validerQtte(int qtteD,int idM) {
+        
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "UPDATE stock SET qtte=" + qtteD + " WHERE idm="+idM;
+            int r = state.executeUpdate(requete);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+        
+    }
+    public static int avoirQtte(int idD) {
+        int qtteD = 0;
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "SELECT qtte FROM demande WHERE 'idD'=" + idD;
+            ResultSet qtteResultat = state.executeQuery(requete);
+
+            if (qtteResultat.next()) {
+                qtteD = qtteResultat.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+        return qtteD;
+    }
+    public static ArrayList<Demande> AfficherDemande() {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "SELECT * FROM demande";
+            ResultSet demandeResultat = state.executeQuery(requete);
+
+            while (demandeResultat.next()) {
+                int idD = demandeResultat.getInt(1);
+                int idS = demandeResultat.getInt(2);
+                int idM = demandeResultat.getInt(3);
+                int qtte = demandeResultat.getInt(4);
+                Demande uneDemande = new Demande(idD, idS, idM, qtte);
+                lesDemandes.add(uneDemande);
+            }
+            demandeResultat.close();
+            state.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+        return lesDemandes;
     }
 }
