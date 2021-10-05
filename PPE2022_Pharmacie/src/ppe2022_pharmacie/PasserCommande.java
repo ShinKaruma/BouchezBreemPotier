@@ -7,7 +7,7 @@ public class PasserCommande extends javax.swing.JFrame {
     public PasserCommande(Stock unPdt) {
 
         initComponents();
-        PasserelleAuth.Connection();
+        Passerelle.Connection();
         
         if (unPdt != null) {
             lblIdAfficherId.setText(unPdt.getId() + "");

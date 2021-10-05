@@ -22,7 +22,7 @@ public class Authentification extends javax.swing.JFrame {
      */
     public Authentification() {
         initComponents();
-        PasserelleAuth.Connection();
+        Passerelle.Connection();
     }
 
     /**
@@ -119,8 +119,8 @@ public class Authentification extends javax.swing.JFrame {
             String hash;
             hash = DatatypeConverter.printHexBinary(raw);
 
-            int[] info = PasserelleAuth.Authentification(login, hash);
-            String service = PasserelleAuth.getService(info[1]);
+            int[] info = Passerelle.Authentification(login, hash);
+            String service = Passerelle.getService(info[1]);
             
             Utilisateur unUtilisateur = new Utilisateur(login, service, info[1], info[2]);
             

@@ -145,6 +145,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Modifier"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnModifierMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="pwdPasse">
       <Properties>

@@ -13,14 +13,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
 
-public class PasserelleAuth {
+public class Passerelle {
 
     private static String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
     private static String user = "potier";
     private static String passwd = "potier";
     private static Connection pdo;
 
-    public PasserelleAuth(String pUrl, String pUser, String pPasswd) {
+    public Passerelle(String pUrl, String pUser, String pPasswd) {
         url = pUrl;
         user = pUser;
         passwd = pPasswd;

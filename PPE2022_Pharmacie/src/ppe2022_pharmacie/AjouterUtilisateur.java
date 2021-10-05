@@ -17,9 +17,9 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     public AjouterUtilisateur() {
         initComponents();
         btnModifier.setVisible(false);
-        PasserelleAuth.Connection();
+        Passerelle.Connection();
         
-        for (Service s : PasserelleAuth.getTousLesServices()) {
+        for (Service s : Passerelle.getTousLesServices()) {
             cbxService.addItem(s.getLibelle());
         }
     }
@@ -27,10 +27,10 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     public AjouterUtilisateur(Utilisateur unUser) {
         initComponents();
         btnValider.setVisible(false);
-        PasserelleAuth.Connection();
+        Passerelle.Connection();
         txtLogin.setText(unUser.getLogin());
         
-        for (Service s : PasserelleAuth.getTousLesServices()) {
+        for (Service s : Passerelle.getTousLesServices()) {
             cbxService.addItem(s.getLibelle());
         }
         
@@ -89,6 +89,11 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         });
 
         btnModifier.setText("Modifier");
+        btnModifier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModifierMouseClicked(evt);
+            }
+        });
 
         pwdPasse.setText("jPasswordField1");
 
@@ -166,10 +171,14 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         
         
         
-        int idService = PasserelleAuth.getIdService(service);
+        int idService = Passerelle.getIdService(service);
         
-        PasserelleAuth.ajouterUtilisateur(login, passe, idService);
+        Passerelle.ajouterUtilisateur(login, passe, idService);
     }//GEN-LAST:event_btnValiderMouseClicked
+
+    private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModifierMouseClicked
 
     /**
      * @param args the command line arguments

@@ -18,10 +18,10 @@ public class AfficherLesUsers extends javax.swing.JFrame {
      */
     public AfficherLesUsers() {
         initComponents();
-        PasserelleAuth.Connection();
+        Passerelle.Connection();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+        for (Utilisateur u : Passerelle.getTousLesUser()) {
             listModel.addElement(u);
         }
         lstUser.setModel(listModel);
@@ -150,10 +150,10 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             Object val = lstUser.getModel().getElementAt(choix);
             Utilisateur unUser = (Utilisateur) val;
 
-            PasserelleAuth.delUnUser(unUser.getIdUser());
+            Passerelle.delUnUser(unUser.getIdUser());
 
             DefaultListModel listModel = new DefaultListModel();
-            for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+            for (Utilisateur u : Passerelle.getTousLesUser()) {
                 listModel.addElement(u);
             }
             lstUser.setModel(listModel);
@@ -177,7 +177,7 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             new AjouterUtilisateur(unUser).setVisible(true);
 
             DefaultListModel listModel = new DefaultListModel();
-            for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+            for (Utilisateur u : Passerelle.getTousLesUser()) {
                 listModel.addElement(u);
             }
             lstUser.setModel(listModel);
@@ -192,7 +192,7 @@ public class AfficherLesUsers extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
         DefaultListModel listModel = new DefaultListModel();
-        for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+        for (Utilisateur u : Passerelle.getTousLesUser()) {
             listModel.addElement(u);
         }
         lstUser.setModel(listModel);

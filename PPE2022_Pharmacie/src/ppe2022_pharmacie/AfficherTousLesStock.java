@@ -12,16 +12,16 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     public AfficherTousLesStock(Utilisateur unUtilisateur) {
         initComponents();
-        PasserelleAuth.Connection();
-        unStock = PasserelleAuth.donnerTousLesStocks();
+        Passerelle.Connection();
+        unStock = Passerelle.donnerTousLesStocks();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : PasserelleAuth.donnerTousLesStocks()) {
+        for (Stock pdt : Passerelle.donnerTousLesStocks()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
 
-        ArrayList<String> ArrayCategorie = PasserelleAuth.donnerCategorie();
+        ArrayList<String> ArrayCategorie = Passerelle.donnerCategorie();
         for (String c : ArrayCategorie) {
             cbxCategorie.addItem(c);
         }
@@ -335,10 +335,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
 
-        unStock = PasserelleAuth.donnerTousLesStocks();
+        unStock = Passerelle.donnerTousLesStocks();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : PasserelleAuth.donnerTousLesStocks()) {
+        for (Stock pdt : Passerelle.donnerTousLesStocks()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
@@ -389,10 +389,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualiser3ActionPerformed
 
     private void btnSeuilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeuilMouseClicked
-        unStock = PasserelleAuth.donnerStockSeuil();
+        unStock = Passerelle.donnerStockSeuil();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : PasserelleAuth.donnerStockSeuil()) {
+        for (Stock pdt : Passerelle.donnerStockSeuil()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
@@ -415,13 +415,13 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         String Tous = "Tous";
         if (cbxCategorie.getSelectedItem() == Tous) {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : PasserelleAuth.donnerTousLesStocks()) {
+            for (Stock pdt : Passerelle.donnerTousLesStocks()) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);
         } else {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : PasserelleAuth.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
+            for (Stock pdt : Passerelle.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);
