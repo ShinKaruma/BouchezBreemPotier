@@ -108,6 +108,37 @@ public class Passerelle {
         return lesStocks;
     }
 
+    public static Stock donnerUnStock(int idM) {
+        if (pdo == null) {
+            Connection();
+        }
+        Stock unMedic=null;
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select * from stock where idm=?";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setInt(1, idM);
+            
+            
+            ResultSet res=prepare.executeQuery();
+            if(res.next()){
+                int id = res.getInt(1);
+                String libelle = res.getString(2);
+                int qtteStock = res.getInt(3);
+                int seuil = res.getInt(4);
+                String categorie = res.getString(5);
+                unMedic = new Stock(id, libelle, qtteStock, seuil, categorie);
+            }
+
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner tous les stocks");
+        }
+        return unMedic;
+    }
+
     public static ArrayList<Stock> donnerStockSeuil() {
         if (pdo == null) {
             Connection();
@@ -189,24 +220,25 @@ public class Passerelle {
         }
         return lesStocks;
     }
-//    public void CreaDemande(Demande uneDemande) {
-//        if (pdo == null) {
-//            Connection();
-//        }
-//        try{
-//            String requete = "insert into demande values (?, ?, ?, ?)";
-//            PreparedStatement prepare = pdo.prepareStatement(requete);
-//            prepare.setInt(1, uneDemande.getIdD());
-//            prepare.setInt(2, uneDemande.getIdS());
-//            prepare.setInt(3, uneDemande.getIdM());
-//            prepare.setInt(4, uneDemande.getQtte());
-//            int res = prepare.executeUpdate();   
-//        }
-//        catch(Exception e){
-//            System.out.println(e);
-//            System.out.println("Erreur insertion demande");
-//        }
-//    }
+
+    public static void CreaDemande(Demande uneDemande) {
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            String requete = "insert into demande values (?, ?, ?, ?)";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setInt(1, uneDemande.getIdD());
+            prepare.setInt(2, uneDemande.getIdS());
+            prepare.setInt(3, uneDemande.getIdM());
+            prepare.setInt(4, uneDemande.getQtte());
+            int res = prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur insertion demande");
+        }
+
+    }
 
     public static void ajouterUtilisateur(String login, String passe, int service) {
         if (pdo == null) {
@@ -280,14 +312,14 @@ public class Passerelle {
         }
     }
 
-    public static void validerQtte(int qtteD, int idM) {
-
+    public static void validerQtte(int qtteD, int qtteM, int idM) {
+        int qtteF = qtteM - qtteD;
         if (pdo == null) {
             Connection();
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "UPDATE stock SET qtte=" + qtteD + " WHERE idm=" + idM;
+            String requete = "UPDATE stock SET qtte=" + qtteF + " WHERE idm=" + idM;
             int r = state.executeUpdate(requete);
         } catch (Exception e) {
             System.out.println(e);
@@ -303,7 +335,7 @@ public class Passerelle {
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "SELECT qtte FROM demande WHERE 'idD'=" + idD;
+            String requete = "SELECT qtte FROM stock WHERE idm=" + idD;
             ResultSet qtteResultat = state.executeQuery(requete);
 
             if (qtteResultat.next()) {
@@ -315,6 +347,21 @@ public class Passerelle {
             System.out.println("Aucune Demande ou id");
         }
         return qtteD;
+    }
+
+    public static void SupprDemande(int idD) {
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            String requete = "delete from demande where idd=?";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setInt(1, idD);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la suppression d'une Demande");
+        }
     }
 
     public static ArrayList<Demande> AfficherDemande() {
@@ -366,7 +413,7 @@ public class Passerelle {
         int idService = 0;
         try {
             Statement state = pdo.createStatement();
-            String requete = "select idservice from service where libelle='" + libelle+"'";
+            String requete = "select idservice from service where libelle='" + libelle + "'";
             ResultSet authResultat = state.executeQuery(requete);
             if (authResultat.next()) {
                 idService = authResultat.getInt(1);
