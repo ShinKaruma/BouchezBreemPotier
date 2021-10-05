@@ -6,15 +6,20 @@ package ppe2022_pharmacie;
  */
 public class Demande {
 
+    @Override
+    public String toString() {
+        return "Demande{" + "idD=" + idD + ", idS=" + unService + ", idM=" + unMedicament + ", qtte=" + qtte + '}';
+    }
+    
     private int idD;
-    private int idS;
-    private int idM;
+    private Service unService;
+    private Stock unMedicament;
     private int qtte;
 
-    public Demande(int idD, int idS, int idM, int qtte) {
+    public Demande(int idD, Service unService,Stock unMedicament, int qtte) {
         this.idD = idD;
-        this.idS = idS;
-        this.idM = idM;
+        this.unService = unService;
+        this.unMedicament =unMedicament ;
         this.qtte = qtte;
     }
 
@@ -26,21 +31,25 @@ public class Demande {
         this.idD = idD;
     }
 
-    public int getIdS() {
-        return idS;
+    public Service getUnService() {
+        return unService;
     }
 
-    public void setIdS(int idS) {
-        this.idS = idS;
+    public void setUnService(Service unService) {
+        this.unService = unService;
     }
 
-    public int getIdM() {
-        return idM;
+    public Stock getUnMedicament() {
+        return unMedicament;
     }
 
-    public void setIdM(int idM) {
-        this.idM = idM;
+    public void setUnMedicament(Stock unMedicament) {
+        this.unMedicament = unMedicament;
     }
+
+    
+
+    
 
     public int getQtte() {
         return qtte;
