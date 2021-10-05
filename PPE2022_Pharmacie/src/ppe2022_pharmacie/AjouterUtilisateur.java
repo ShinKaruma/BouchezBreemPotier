@@ -17,6 +17,8 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     public AjouterUtilisateur() {
         initComponents();
         btnModifier.setVisible(false);
+        lblId.setVisible(false);
+        lblOutputID.setVisible(false);
         Passerelle.Connection();
         
         for (Service s : Passerelle.getTousLesServices()) {
@@ -27,6 +29,7 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     public AjouterUtilisateur(Utilisateur unUser) {
         initComponents();
         btnValider.setVisible(false);
+        lblOutputID.setText(String.valueOf(unUser.getIdUser()));
         Passerelle.Connection();
         txtLogin.setText(unUser.getLogin());
         
@@ -56,6 +59,8 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         btnModifier = new javax.swing.JButton();
         pwdPasse = new javax.swing.JPasswordField();
+        lblId = new javax.swing.JLabel();
+        lblOutputID = new javax.swing.JLabel();
 
         jButton3.setText("jButton3");
 
@@ -97,17 +102,25 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
 
         pwdPasse.setText("jPasswordField1");
 
+        lblId.setText("id Utilisateur");
+
+        lblOutputID.setText(".");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblPasse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblMdp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblService, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPasse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblMdp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblService, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                     .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,17 +131,18 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(pwdPasse, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                             .addComponent(txtLogin)
-                            .addComponent(cbxService, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbxService, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblOutputID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(63, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblId)
+                    .addComponent(lblOutputID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPasse, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -144,7 +158,7 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModifier)
                     .addComponent(btnValider))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -177,7 +191,22 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     }//GEN-LAST:event_btnValiderMouseClicked
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
-        // TODO add your handling code here:
+        String login = txtLogin.getText();
+        String passe = "";
+        char[] passeChar = pwdPasse.getPassword();
+        for (char unChar : passeChar) {
+            passe += unChar;
+        }
+        int idUser = Integer.parseInt(lblOutputID.getText());
+        String service = (String) cbxService.getSelectedItem();
+        
+        
+        
+        int idService = Passerelle.getIdService(service);
+        
+        Utilisateur unUser = new Utilisateur(login, service, idService, idUser);
+        
+        Passerelle.modifUser(unUser, passe);
     }//GEN-LAST:event_btnModifierMouseClicked
 
     /**
@@ -221,7 +250,9 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxService;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblMdp;
+    private javax.swing.JLabel lblOutputID;
     private javax.swing.JLabel lblPasse;
     private javax.swing.JLabel lblService;
     private javax.swing.JPasswordField pwdPasse;
