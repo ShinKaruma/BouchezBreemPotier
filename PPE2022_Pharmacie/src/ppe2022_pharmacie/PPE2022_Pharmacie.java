@@ -4,7 +4,7 @@ public class PPE2022_Pharmacie {
 
     public static void main(String[] args) {
         PasserelleAuth.Connection();
-        PasserelleAuth.ajouterUtilisateur("Charly", "swagg", 5);
+        PasserelleAuth.ajouterUtilisateur("Michel", "bite", 4);
     }
     
 }

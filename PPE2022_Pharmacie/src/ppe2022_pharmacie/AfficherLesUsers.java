@@ -19,8 +19,7 @@ public class AfficherLesUsers extends javax.swing.JFrame {
     public AfficherLesUsers() {
         initComponents();
         PasserelleAuth.Connection();
-        
-        
+
         DefaultListModel listModel = new DefaultListModel();
         for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
             listModel.addElement(u);
@@ -42,6 +41,9 @@ public class AfficherLesUsers extends javax.swing.JFrame {
         btnModifUser = new javax.swing.JButton();
         btnSupprUser = new javax.swing.JButton();
         btnQuitter = new javax.swing.JButton();
+        lblOutput = new javax.swing.JLabel();
+        btnAjouter = new javax.swing.JButton();
+        btnActualiser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +55,11 @@ public class AfficherLesUsers extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lstUser);
 
         btnModifUser.setText("Modifier");
+        btnModifUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModifUserMouseClicked(evt);
+            }
+        });
 
         btnSupprUser.setText("Supprimer");
         btnSupprUser.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -69,33 +76,65 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             }
         });
 
+        btnAjouter.setText("Ajouter");
+        btnAjouter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAjouterMouseClicked(evt);
+            }
+        });
+
+        btnActualiser.setText("Actualiser");
+        btnActualiser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualiserMouseClicked(evt);
+            }
+        });
+        btnActualiser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualiserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
+                .addContainerGap()
+                .addComponent(lblOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnModifUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSupprUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSupprUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                        .addComponent(btnAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualiser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModifUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSupprUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnQuitter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnModifUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSupprUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualiser)))
+                .addGap(7, 7, 7))
         );
 
         pack();
@@ -106,12 +145,58 @@ public class AfficherLesUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuitterMouseClicked
 
     private void btnSupprUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupprUserMouseClicked
-       int choix = lstUser.getSelectedIndex();
-        Object val = lstUser.getModel().getElementAt(choix);
-        Utilisateur unUser = (Utilisateur) val;
-        
-        
+        Integer choix = lstUser.getSelectedIndex();
+        if (choix != null) {
+            Object val = lstUser.getModel().getElementAt(choix);
+            Utilisateur unUser = (Utilisateur) val;
+
+            PasserelleAuth.delUnUser(unUser.getIdUser());
+
+            DefaultListModel listModel = new DefaultListModel();
+            for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+                listModel.addElement(u);
+            }
+            lstUser.setModel(listModel);
+        } else {
+            lblOutput.setText("aucun utilisateur n'a été choisi");
+        }
+
+
     }//GEN-LAST:event_btnSupprUserMouseClicked
+
+    private void btnAjouterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjouterMouseClicked
+        new AjouterUtilisateur().setVisible(true);
+    }//GEN-LAST:event_btnAjouterMouseClicked
+
+    private void btnModifUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifUserMouseClicked
+        Integer choix = lstUser.getSelectedIndex();
+        if (choix != null) {
+            Object val = lstUser.getModel().getElementAt(choix);
+            Utilisateur unUser = (Utilisateur) val;
+
+            new AjouterUtilisateur(unUser).setVisible(true);
+
+            DefaultListModel listModel = new DefaultListModel();
+            for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+                listModel.addElement(u);
+            }
+            lstUser.setModel(listModel);
+        } else {
+            lblOutput.setText("aucun utilisateur n'a été choisi");
+        }
+    }//GEN-LAST:event_btnModifUserMouseClicked
+
+    private void btnActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualiserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualiserActionPerformed
+
+    private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
+        DefaultListModel listModel = new DefaultListModel();
+        for (Utilisateur u : PasserelleAuth.getTousLesUser()) {
+            listModel.addElement(u);
+        }
+        lstUser.setModel(listModel);
+    }//GEN-LAST:event_btnActualiserMouseClicked
 
     /**
      * @param args the command line arguments
@@ -149,10 +234,13 @@ public class AfficherLesUsers extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualiser;
+    private javax.swing.JButton btnAjouter;
     private javax.swing.JButton btnModifUser;
     private javax.swing.JButton btnQuitter;
     private javax.swing.JButton btnSupprUser;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblOutput;
     private javax.swing.JList<String> lstUser;
     // End of variables declaration//GEN-END:variables
 }

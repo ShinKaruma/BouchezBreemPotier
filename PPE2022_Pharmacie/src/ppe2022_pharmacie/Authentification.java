@@ -10,7 +10,6 @@ import java.security.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
-import sun.security.provider.MD5;
 
 /**
  *
@@ -133,10 +132,13 @@ public class Authentification extends javax.swing.JFrame {
                     case 0:
                         break;
                     case 1:
+                        new AfficherLesUsers().setVisible(true);
+                        this.dispose();
                         break;
                     case 2:
                         new AfficherTousLesStock(unUtilisateur).setVisible(true);
                         this.dispose();
+                        break;
                     default:
                 }
             }

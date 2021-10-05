@@ -22,8 +22,8 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         lstAfficherTous.setModel(listModel);
 
         ArrayList<String> ArrayCategorie = PasserelleAuth.donnerCategorie();
-        for (String s : ArrayCategorie) {
-            cbxCategorie.addItem(s);
+        for (String c : ArrayCategorie) {
+            cbxCategorie.addItem(c);
         }
         
         lblUser.setText(unUtilisateur.getLogin()+": "+unUtilisateur.getService());

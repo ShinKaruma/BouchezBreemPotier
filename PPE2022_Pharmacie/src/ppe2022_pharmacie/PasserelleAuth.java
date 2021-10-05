@@ -45,7 +45,7 @@ public class PasserelleAuth {
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "Select count(*), service, idpersonnel from authentification where login ='" + login + "' and passe='" + password + "' group by service";
+            String requete = "Select count(*), service, idpersonnel from authentification where login ='" + login + "' and passe='" + password + "' group by service, idpersonnel";
             ResultSet authResultat = state.executeQuery(requete);
             if (authResultat.next()) {
                 infos[0] = authResultat.getInt(1);
@@ -72,7 +72,7 @@ public class PasserelleAuth {
             if (authResultat.next()) {
                 info = authResultat.getString(1);
             }
-            
+
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Erreur dans la récupération du mdp");
@@ -207,19 +207,18 @@ public class PasserelleAuth {
 //            System.out.println("Erreur insertion demande");
 //        }
 //    }
-    
-    
-    public static void ajouterUtilisateur(String login, String passe, int service){
+
+    public static void ajouterUtilisateur(String login, String passe, int service) {
         if (pdo == null) {
             Connection();
         }
-        try{
+        try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte raw[] = md.digest(passe.getBytes("UTF-8"));
             String hash;
             hash = DatatypeConverter.printHexBinary(raw);
             System.out.println(hash);
-            
+
             String requete = "insert into authentification (login, passe, service) values(?, ?, ?)";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setString(1, login);
@@ -231,15 +230,15 @@ public class PasserelleAuth {
             System.out.println("Erreur dans l'ajout d'un utilisateur");
         }
     }
-    
-    public static String getService(int idService){
-        String requete = "select libelle from service where idservice = "+idService;
+
+    public static String getService(int idService) {
+        String requete = "select libelle from service where idservice = " + idService;
         String service = "";
-        try{
+        try {
             Statement state = pdo.createStatement();
             ResultSet serviceResultat = state.executeQuery(requete);
             if (serviceResultat.next()) {
-                service =  serviceResultat.getString(1);
+                service = serviceResultat.getString(1);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -247,21 +246,20 @@ public class PasserelleAuth {
         }
         return service;
     }
-    
-    public static ArrayList<Utilisateur> getTousLesUser(){
+
+    public static ArrayList<Utilisateur> getTousLesUser() {
         String requete = "select login, service.libelle, service, idpersonnel from authentification join service on authentification.service = service.idservice";
         ArrayList<Utilisateur> lesUsers = new ArrayList<>();
-        try{
+        try {
             Statement state = pdo.createStatement();
             ResultSet userResultat = state.executeQuery(requete);
             while (userResultat.next()) {
-                String login =  userResultat.getString(1);
+                String login = userResultat.getString(1);
                 String service = userResultat.getString(2);
                 int idService = userResultat.getInt(3);
                 int idUser = userResultat.getInt(4);
-                
+
                 lesUsers.add(new Utilisateur(login, service, idService, idUser));
-                System.out.println(lesUsers.toString());
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -269,24 +267,35 @@ public class PasserelleAuth {
         }
         return lesUsers;
     }
-    
-    public static void delUnUser(int idUser){
-        String requete = "delete from authentification where idpersonnel=";
-    public static void validerQtte(int qtteD,int idM) {
-        
+
+    public static void delUnUser(int idUser) {
+        String requete = "delete from authentification where idpersonnel=?";
+        try {
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setInt(1, idUser);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la suppression d'un utilisateur");
+        }
+    }
+
+    public static void validerQtte(int qtteD, int idM) {
+
         if (pdo == null) {
             Connection();
         }
         try {
             Statement state = pdo.createStatement();
-            String requete = "UPDATE stock SET qtte=" + qtteD + " WHERE idm="+idM;
+            String requete = "UPDATE stock SET qtte=" + qtteD + " WHERE idm=" + idM;
             int r = state.executeUpdate(requete);
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Aucune Demande ou id");
         }
-        
+
     }
+
     public static int avoirQtte(int idD) {
         int qtteD = 0;
         if (pdo == null) {
@@ -307,6 +316,7 @@ public class PasserelleAuth {
         }
         return qtteD;
     }
+
     public static ArrayList<Demande> AfficherDemande() {
         if (pdo == null) {
             Connection();
@@ -332,5 +342,39 @@ public class PasserelleAuth {
             System.out.println("Aucune Demande ou id");
         }
         return lesDemandes;
+    }
+
+    public static ArrayList<Service> getTousLesServices() {
+        ArrayList<Service> lesService = new ArrayList<>();
+        String requete = "select * from service";
+        try {
+            Statement state = pdo.createStatement();
+            ResultSet serviceResultat = state.executeQuery(requete);
+            while (serviceResultat.next()) {
+                int idService = serviceResultat.getInt(1);
+                String libelle = serviceResultat.getString(2);
+                lesService.add(new Service(idService, libelle));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la récupération des services");
+        }
+        return lesService;
+    }
+
+    public static int getIdService(String libelle) {
+        int idService = 0;
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select idservice from service where libelle='" + libelle+"'";
+            ResultSet authResultat = state.executeQuery(requete);
+            if (authResultat.next()) {
+                idService = authResultat.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la récupération des services");
+        }
+        return idService;
     }
 }
