@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 public class Passerelle {
 
@@ -166,6 +166,30 @@ public class Passerelle {
         }
         return lesStocks;
     }
+    
+    public static ArrayList<String> donnerFournisseur() {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList ArrayFournisseur = new ArrayList();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select distinct nom from fournisseur";
+            ResultSet stockResultat = state.executeQuery(requete);
+            while (stockResultat.next()) {
+                String fournisseur = stockResultat.getString(1);
+//                Stock unStock = new Stock(categorie);
+                ArrayFournisseur.add(fournisseur);
+            }
+            stockResultat.close();
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner tous les stocks");
+        }
+        return ArrayFournisseur;
+    }
 
     public static ArrayList<String> donnerCategorie() {
         if (pdo == null) {
@@ -261,6 +285,32 @@ public class Passerelle {
             System.out.println(e);
             System.out.println("Erreur dans l'ajout d'un utilisateur");
         }
+    }
+    
+    public static boolean ajouterCommande(String fournisseur, String medicament, int qtte) {
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete1 = "select max(idc) from commandes";
+            ResultSet stockResultat = state.executeQuery(requete1);
+            if(stockResultat.next()){
+                int idc = stockResultat.getInt(1) + 1;
+                String requete2 = "insert into commandes (idc,fournisseur, medicament, qtte) values(?, ?, ?, ?)";
+                PreparedStatement prepare = pdo.prepareStatement(requete2);
+                prepare.setInt(1, idc);
+                prepare.setString(2, fournisseur);
+                prepare.setString(3, medicament);
+                prepare.setInt(4, qtte);
+                prepare.executeUpdate();
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans l'ajout de la commande");
+        }
+        return true;
     }
 
     public static String getService(int idService) {
