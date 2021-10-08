@@ -9,8 +9,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     ArrayList<Stock> unStock = new ArrayList<Stock>();
     Scanner sc = new Scanner(System.in);
+    private Utilisateur unUser;
 
     public AfficherTousLesStock(Utilisateur unUtilisateur) {
+        unUser = unUtilisateur;
         initComponents();
         Passerelle.Connection();
         unStock = Passerelle.donnerTousLesStocks();
@@ -26,7 +28,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             cbxCategorie.addItem(c);
         }
         
-        lblUser.setText(unUtilisateur.getLogin()+": "+unUtilisateur.getService());
+        lblUser1.setText(unUtilisateur.getLogin()+": "+unUtilisateur.getService());
     }
 
     @SuppressWarnings("unchecked")
@@ -57,6 +59,8 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         btnCategorie = new javax.swing.JButton();
         lblUser = new javax.swing.JLabel();
         btnDeconnexion = new javax.swing.JButton();
+        btnDemandes = new javax.swing.JButton();
+        lblUser1 = new javax.swing.JLabel();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -270,6 +274,22 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             }
         });
 
+        btnDemandes.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnDemandes.setForeground(new java.awt.Color(255, 51, 51));
+        btnDemandes.setText("Afficher les demandes");
+        btnDemandes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDemandesMouseClicked(evt);
+            }
+        });
+        btnDemandes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDemandesActionPerformed(evt);
+            }
+        });
+
+        lblUser1.setText(".");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -287,40 +307,40 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                         .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(42, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(lblAfficherTous))
-                            .addComponent(lblTitre))
-                        .addGap(316, 316, 316))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)))
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addComponent(btnDemandes)
+                            .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(39, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblAfficherTous))
+                    .addComponent(lblTitre))
+                .addGap(316, 316, 316))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(lblTitre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblAfficherTous)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblUser))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblAfficherTous)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -330,11 +350,15 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDemandes)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUser1)))
+                    .addComponent(lblUser))
                 .addContainerGap())
         );
 
@@ -459,6 +483,14 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeconnexionActionPerformed
 
+    private void btnDemandesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDemandesMouseClicked
+        new AfficherDemandes(true, unUser).setVisible(true);
+    }//GEN-LAST:event_btnDemandesMouseClicked
+
+    private void btnDemandesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDemandesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDemandesActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -494,6 +526,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private javax.swing.JButton btnActualiser3;
     private javax.swing.JButton btnCategorie;
     private javax.swing.JButton btnDeconnexion;
+    private javax.swing.JButton btnDemandes;
     private javax.swing.JButton btnSeuil;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -510,6 +543,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitre;
     private javax.swing.JLabel lblTitre1;
     private javax.swing.JLabel lblUser;
+    private javax.swing.JLabel lblUser1;
     private javax.swing.JList<String> lstAfficherTous;
     private javax.swing.JList<String> lstAfficherTous1;
     // End of variables declaration//GEN-END:variables

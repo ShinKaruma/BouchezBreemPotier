@@ -37,6 +37,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
         TFQ = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        btnAnnuler = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +70,18 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
         jLabel5.setText("Entrer la Quantitée:");
 
+        btnAnnuler.setText("Annuler");
+        btnAnnuler.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnnulerMouseClicked(evt);
+            }
+        });
+        btnAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnnulerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,6 +105,8 @@ public class CreationDeDemande extends javax.swing.JFrame {
                 .addContainerGap(138, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAnnuler)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnV)
                 .addContainerGap())
         );
@@ -117,7 +132,9 @@ public class CreationDeDemande extends javax.swing.JFrame {
                     .addComponent(TFQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(btnV)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnV)
+                    .addComponent(btnAnnuler))
                 .addContainerGap())
         );
 
@@ -148,6 +165,14 @@ public class CreationDeDemande extends javax.swing.JFrame {
         Demande uneDemande = new Demande(idDem, idServ, idMed, qtte);
         Passerelle.CreaDemande(uneDemande);
     }//GEN-LAST:event_btnVActionPerformed
+
+    private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnnulerActionPerformed
+
+    private void btnAnnulerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnnulerMouseClicked
+        dispose();
+    }//GEN-LAST:event_btnAnnulerMouseClicked
 
     /**
      * @param args the command line arguments
@@ -194,6 +219,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private javax.swing.JTextField TFM;
     private javax.swing.JTextField TFQ;
     private javax.swing.JTextField TFS;
+    private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnV;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
