@@ -5,6 +5,8 @@
  */
 package ppe2022_pharmacie;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sio2021
@@ -164,6 +166,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
         int qtte = Integer.parseInt(Sqtte);
         Demande uneDemande = new Demande(idDem, idServ, idMed, qtte);
         Passerelle.CreaDemande(uneDemande);
+        JOptionPane.showMessageDialog(null, "Demande créée");
     }//GEN-LAST:event_btnVActionPerformed
 
     private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
