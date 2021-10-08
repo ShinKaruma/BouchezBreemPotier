@@ -11,18 +11,16 @@ package ppe2022_pharmacie;
 public class Utilisateur {
     private int idUser;
     private String login;
-    private String service;
-    private int idService;
+    private Service unService;
 
     public Utilisateur(String login, String service, int idService, int idUser) {
         this.login = login;
-        this.service = service;
-        this.idService = idService;
+        this.unService = new Service(idService, service);
         this.idUser = idUser;
     }
 
-    public String getService() {
-        return service;
+    public Service getService() {
+        return unService;
     }
 
     public String getLogin() {
@@ -33,9 +31,19 @@ public class Utilisateur {
         return idUser;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setService(Service service) {
+        this.unService = service;
+    }
+
+    
+    
     @Override
     public String toString() {
-        return "login=" + login + " | service=" + service + " | idService=" + idService;
+        return "login=" + login + " | service=" + unService.getLibelle() + " | idService=" + unService.getIdService();
     }
     
     

@@ -56,6 +56,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         cbxCategorie = new javax.swing.JComboBox<>();
         btnCategorie = new javax.swing.JButton();
         lblUser = new javax.swing.JLabel();
+        btnDeconnexion = new javax.swing.JButton();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -255,6 +256,20 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             }
         });
 
+        btnDeconnexion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        btnDeconnexion.setForeground(new java.awt.Color(255, 51, 51));
+        btnDeconnexion.setText("Déconnexion");
+        btnDeconnexion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeconnexionMouseClicked(evt);
+            }
+        });
+        btnDeconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeconnexionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,8 +300,11 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                             .addComponent(lblTitre))
                         .addGap(316, 316, 316))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)))
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -314,7 +332,9 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -430,6 +450,15 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCategorieMouseClicked
 
+    private void btnDeconnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeconnexionMouseClicked
+        new Authentification().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnDeconnexionMouseClicked
+
+    private void btnDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeconnexionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeconnexionActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -464,6 +493,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private javax.swing.JButton btnActualiser2;
     private javax.swing.JButton btnActualiser3;
     private javax.swing.JButton btnCategorie;
+    private javax.swing.JButton btnDeconnexion;
     private javax.swing.JButton btnSeuil;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;

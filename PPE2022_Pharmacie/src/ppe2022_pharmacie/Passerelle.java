@@ -420,8 +420,30 @@ public class Passerelle {
             }
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("Erreur dans la récupération des services");
+            System.out.println("Erreur dans la récupération de l'id service");
         }
         return idService;
+    }
+    
+    public static void modifUser(Utilisateur unUser, String passe){
+        String requete = "Update authentification set login = ?, passe=?, service=? where idpersonnel=?";
+         try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte raw[] = md.digest(passe.getBytes("UTF-8"));
+            String hash;
+            hash = DatatypeConverter.printHexBinary(raw);
+            
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setString(1, unUser.getLogin());
+            prepare.setString(2, hash);
+            prepare.setInt(3, unUser.getService().getIdService());
+            prepare.setInt(4, unUser.getIdUser());
+            prepare.executeUpdate();
+            
+            
+         }catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la modification de l'utilisateur");
+        }
     }
 }
