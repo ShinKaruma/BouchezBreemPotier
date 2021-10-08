@@ -107,6 +107,33 @@ public class Passerelle {
         }
         return lesStocks;
     }
+    
+    public static ArrayList<Commandes> donnerToutesLesCommandes() {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList<Commandes> lesCommandes = new ArrayList<Commandes>();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select * from commandes";
+            ResultSet commandesResultat = state.executeQuery(requete);
+            while (commandesResultat.next()) {
+                int idc = commandesResultat.getInt(1);
+                String fournisseur = commandesResultat.getString(2);
+                String medicament = commandesResultat.getString(3);
+                int qtte = commandesResultat.getInt(4);
+                Commandes uneCommande = new Commandes(idc, fournisseur, medicament, qtte);
+                lesCommandes.add(uneCommande);
+            }
+            commandesResultat.close();
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner toutes les commandes");
+        }
+        return lesCommandes;
+    }
 
     public static Stock donnerUnStock(int idM) {
         if (pdo == null) {
