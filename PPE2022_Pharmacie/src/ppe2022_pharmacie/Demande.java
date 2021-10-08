@@ -8,18 +8,18 @@ public class Demande {
 
     @Override
     public String toString() {
-        return "Demande{" + "idD=" + idD + ", idS=" + unService + ", idM=" + unMedicament + ", qtte=" + qtte + '}';
+        return "Demande{" + "idD=" + idD + ", idS=" + idS + ", idM=" + idM + ", qtte=" + qtte + '}';
     }
     
     private int idD;
-    private Service unService;
-    private Stock unMedicament;
+    private int idS;
+    private int idM;
     private int qtte;
 
-    public Demande(int idD, Service unService,Stock unMedicament, int qtte) {
+    public Demande(int idD, int idS, int idM, int qtte) {
         this.idD = idD;
-        this.unService = unService;
-        this.unMedicament =unMedicament ;
+        this.idS = idS;
+        this.idM =idM ;
         this.qtte = qtte;
     }
 
@@ -31,25 +31,21 @@ public class Demande {
         this.idD = idD;
     }
 
-    public Service getUnService() {
-        return unService;
+    public int getIdS() {
+        return idS;
     }
 
-    public void setUnService(Service unService) {
-        this.unService = unService;
+    public void setIdS(int idS) {
+        this.idS = idS;
     }
 
-    public Stock getUnMedicament() {
-        return unMedicament;
+    public int getIdM() {
+        return idM;
     }
 
-    public void setUnMedicament(Stock unMedicament) {
-        this.unMedicament = unMedicament;
+    public void setIdM(int idM) {
+        this.idM = idM;
     }
-
-    
-
-    
 
     public int getQtte() {
         return qtte;
