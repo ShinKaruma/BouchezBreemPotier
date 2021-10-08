@@ -140,6 +140,9 @@ public class Authentification extends javax.swing.JFrame {
                         this.dispose();
                         break;
                     default:
+                        new AfficherDemandes(false, unUtilisateur).setVisible(true);
+                        this.dispose();
+                        break;
                 }
             }
         } catch (NoSuchAlgorithmException ex) {

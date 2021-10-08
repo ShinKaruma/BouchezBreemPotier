@@ -496,4 +496,31 @@ public class Passerelle {
             System.out.println("Erreur dans la modification de l'utilisateur");
         }
     }
+    
+    public static ArrayList<Demande> AfficherDemandeParService(int idService) {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "SELECT * FROM demande where ids="+idService;
+            ResultSet demandeResultat = state.executeQuery(requete);
+
+            while (demandeResultat.next()) {
+                int idD = demandeResultat.getInt(1);
+                int idS = demandeResultat.getInt(2);
+                int idM = demandeResultat.getInt(3);
+                int qtte = demandeResultat.getInt(4);
+                Demande uneDemande = new Demande(idD, idS, idM, qtte);
+                lesDemandes.add(uneDemande);
+            }
+            demandeResultat.close();
+            state.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+        return lesDemandes;
+    }
 }

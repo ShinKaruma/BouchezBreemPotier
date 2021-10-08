@@ -12,14 +12,29 @@ import javax.swing.DefaultListModel;
  *
  * @author sio2021
  */
-public class ValiderDemande extends javax.swing.JFrame {
+public class AfficherDemandes extends javax.swing.JFrame {
 
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
 
-    public ValiderDemande() {
+    public AfficherDemandes(boolean pharmacien, Utilisateur unUser) {
         Passerelle.Connection();
         initComponents();
-        uneDemande = Passerelle.AfficherDemande();
+
+        if (!pharmacien) {
+            btnValider.setVisible(false);
+            DefaultListModel listModel = new DefaultListModel();
+            for (Demande dmd : Passerelle.AfficherDemandeParService(unUser.getService().getIdService())) {
+                listModel.addElement(dmd);
+            }
+        } else {
+            btnCreerDemande.setVisible(false);
+            btnDeconnexion.setVisible(false);
+            DefaultListModel listModel = new DefaultListModel();
+            for (Demande dmd : Passerelle.AfficherDemande()) {
+                listModel.addElement(dmd);
+            }
+        }
+
         DefaultListModel listModel = new DefaultListModel();
         for (Demande dmd : Passerelle.AfficherDemande()) {
             listModel.addElement(dmd);
@@ -40,6 +55,8 @@ public class ValiderDemande extends javax.swing.JFrame {
         ListD = new javax.swing.JList<>();
         btnValider = new javax.swing.JButton();
         btnFermer = new javax.swing.JButton();
+        btnCreerDemande = new javax.swing.JButton();
+        btnDeconnexion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,19 +86,45 @@ public class ValiderDemande extends javax.swing.JFrame {
             }
         });
 
+        btnCreerDemande.setText("Ajouter");
+        btnCreerDemande.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCreerDemandeMouseClicked(evt);
+            }
+        });
+        btnCreerDemande.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreerDemandeActionPerformed(evt);
+            }
+        });
+
+        btnDeconnexion.setText("Deconnexion");
+        btnDeconnexion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeconnexionMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnValider)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFermer))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnValider)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFermer))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCreerDemande)
+                        .addGap(115, 115, 115)
+                        .addComponent(btnDeconnexion)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +134,15 @@ public class ValiderDemande extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnValider)
                     .addComponent(btnFermer))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCreerDemande)
+                        .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeconnexion)
+                        .addContainerGap())))
         );
 
         pack();
@@ -122,6 +173,19 @@ public class ValiderDemande extends javax.swing.JFrame {
         ListD.setModel(listModel);
     }//GEN-LAST:event_btnValiderMouseClicked
 
+    private void btnCreerDemandeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerDemandeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCreerDemandeActionPerformed
+
+    private void btnCreerDemandeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreerDemandeMouseClicked
+        new CreationDeDemande().setVisible(true);
+    }//GEN-LAST:event_btnCreerDemandeMouseClicked
+
+    private void btnDeconnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeconnexionMouseClicked
+        new Authentification().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnDeconnexionMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -139,27 +203,31 @@ public class ValiderDemande extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ValiderDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AfficherDemandes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ValiderDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AfficherDemandes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ValiderDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AfficherDemandes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ValiderDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AfficherDemandes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ValiderDemande().setVisible(true);
+//                new AfficherDemandes().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ListD;
+    private javax.swing.JButton btnCreerDemande;
+    private javax.swing.JButton btnDeconnexion;
     private javax.swing.JButton btnFermer;
     private javax.swing.JButton btnValider;
     private javax.swing.JScrollPane jScrollPane1;
