@@ -3,6 +3,7 @@ package ppe2022_pharmacie;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 
 public class AfficherCommande extends javax.swing.JFrame {
 
@@ -10,6 +11,9 @@ public class AfficherCommande extends javax.swing.JFrame {
     Scanner sc = new Scanner(System.in);
     
     public AfficherCommande() {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         Passerelle.Connection();
         uneCommande = Passerelle.donnerToutesLesCommandes();

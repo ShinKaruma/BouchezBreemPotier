@@ -3,6 +3,7 @@ package ppe2022_pharmacie;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class AfficherTousLesStock extends javax.swing.JFrame {
@@ -12,6 +13,9 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private Utilisateur unUser;
 
     public AfficherTousLesStock(Utilisateur unUtilisateur) {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         unUser = unUtilisateur;
         initComponents();
         Passerelle.Connection();

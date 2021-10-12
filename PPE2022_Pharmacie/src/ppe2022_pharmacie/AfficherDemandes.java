@@ -7,6 +7,7 @@ package ppe2022_pharmacie;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -15,8 +16,12 @@ import javax.swing.DefaultListModel;
 public class AfficherDemandes extends javax.swing.JFrame {
 
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
+    private Utilisateur unUser;
 
     public AfficherDemandes(boolean pharmacien, Utilisateur unUser) {
+        this.unUser = unUser;
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Passerelle.Connection();
         initComponents();
 
@@ -170,8 +175,8 @@ public class AfficherDemandes extends javax.swing.JFrame {
         int choix = ListD.getSelectedIndex();
         Object val = ListD.getModel().getElementAt(choix);
         Demande uneDmd = (Demande) val;
-        int qtteM = Passerelle.avoirQtte(uneDmd.getIdM());
-        Passerelle.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getIdM());
+        int qtteM = Passerelle.avoirQtte(uneDmd.getMedicament().getId());
+        Passerelle.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getMedicament().getId());
         Passerelle.SupprDemande(uneDmd.getIdD());
         //Actualisation
         DefaultListModel listModel = new DefaultListModel();
@@ -186,7 +191,7 @@ public class AfficherDemandes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreerDemandeActionPerformed
 
     private void btnCreerDemandeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreerDemandeMouseClicked
-        new CreationDeDemande().setVisible(true);
+        new CreationDeDemande(unUser).setVisible(true);
     }//GEN-LAST:event_btnCreerDemandeMouseClicked
 
     private void btnDeconnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeconnexionMouseClicked

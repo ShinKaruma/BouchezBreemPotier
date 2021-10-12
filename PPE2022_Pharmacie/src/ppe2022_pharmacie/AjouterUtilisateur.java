@@ -5,6 +5,8 @@
  */
 package ppe2022_pharmacie;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author hbana
@@ -15,6 +17,9 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
      * Creates new form AjouterUtilisateur
      */
     public AjouterUtilisateur() {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         btnModifier.setVisible(false);
         lblId.setVisible(false);
@@ -27,6 +32,10 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     }
     
     public AjouterUtilisateur(Utilisateur unUser) {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
         initComponents();
         btnValider.setVisible(false);
         lblOutputID.setText(String.valueOf(unUser.getIdUser()));

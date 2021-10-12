@@ -11,6 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
 
+import jakarta.xml.bind.DatatypeConverter;
+import javax.swing.JFrame;
+
 /**
  *
  * @author hbana
@@ -21,8 +24,11 @@ public class Authentification extends javax.swing.JFrame {
      * Creates new form Authentification
      */
     public Authentification() {
-        initComponents();
         Passerelle.Connection();
+        initComponents();
+        this.setTitle("Se connecter");
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -120,9 +126,9 @@ public class Authentification extends javax.swing.JFrame {
             hash = DatatypeConverter.printHexBinary(raw);
 
             int[] info = Passerelle.Authentification(login, hash);
-            String service = Passerelle.getService(info[1]);
+            Service service = Passerelle.getService(info[1]);
             
-            Utilisateur unUtilisateur = new Utilisateur(login, service, info[1], info[2]);
+            Utilisateur unUtilisateur = new Utilisateur(login, service.getLibelle(), info[1], info[2]);
             
             if (info[0] == 0) {
                 lblOutput.setText("Erreur dans le couple Login/mdp");

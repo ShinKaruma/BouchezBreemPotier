@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +7,7 @@ package ppe2022_pharmacie;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,12 +19,20 @@ public class CreationDeDemande extends javax.swing.JFrame {
     /**
      * Creates new form CreationDeDemande
      */
-    public CreationDeDemande() {
+    
+    private int idService;
+    
+    public CreationDeDemande(Utilisateur unUser) {
+        idService = unUser.getService().getIdService();
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         ArrayList<Stock> ArrayMedic = Passerelle.donnerTousLesStocks();
         for (Stock c: ArrayMedic) {
             cbxMedicament.addItem(c.getLibelle());
         }
+        
+        lblService.setText(unUser.getService().getLibelle());
     }
 
     
@@ -32,8 +41,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        TFD = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         btnV = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         TFQ = new javax.swing.JTextField();
@@ -42,18 +49,25 @@ public class CreationDeDemande extends javax.swing.JFrame {
         btnAnnuler = new javax.swing.JButton();
         cbxService = new javax.swing.JComboBox<>();
         cbxMedicament = new javax.swing.JComboBox<>();
+        txtMedicament = new javax.swing.JTextField();
+        txtQtte = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnAnnuler = new javax.swing.JButton();
+        lblService = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Création d'une Demande");
 
-        TFD.addActionListener(new java.awt.event.ActionListener() {
+        btnV.setText("Valider");
+        btnV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFDActionPerformed(evt);
+                btnVActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Entrer l'id de la Demande:");
+        jLabel3.setText("Service:");
 
         btnV.setText("Valider");
         btnV.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -62,12 +76,19 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         });
         btnV.addActionListener(new java.awt.event.ActionListener() {
+        txtMedicament.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVActionPerformed(evt);
+                txtMedicamentActionPerformed(evt);
             }
         });
 
+
         jLabel3.setText("Entrer l'id du Service:");
+        txtQtte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQtteActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Entrer l'id du Médicament:");
 
@@ -98,6 +119,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
                 cbxMedicamentActionPerformed(evt);
             }
         });
+        lblService.setText(".");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +141,19 @@ public class CreationDeDemande extends javax.swing.JFrame {
                             .addComponent(TFQ, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                             .addComponent(cbxService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel1)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblService, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtMedicament)
+                        .addComponent(txtQtte, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
+
                 .addContainerGap(138, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -132,23 +167,28 @@ public class CreationDeDemande extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblService))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TFD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+
                     .addComponent(jLabel3)
                     .addComponent(cbxService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbxMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+                    .addComponent(txtMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TFQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtQtte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnV)
                     .addComponent(btnAnnuler))
@@ -157,6 +197,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void TFDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFDActionPerformed
         // TODO add your handling code here:
@@ -169,13 +210,20 @@ public class CreationDeDemande extends javax.swing.JFrame {
         Object medSelec= cbxMedicament.getSelectedItem();
         String Sqtte = TFQ.getText();
 
-        int idDem = Integer.parseInt(SidDem);
-        int idServ = Integer.parseInt(SidServ);
+    private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
+        // TODO add your handling code here:
+        String SidMed = txtMedicament.getText();
+        String Sqtte = txtQtte.getText();
+
+
+        int idServ = idService;
         int idMed = Integer.parseInt(SidMed);
 
+
+
         int qtte = Integer.parseInt(Sqtte);
-        Demande uneDemande = new Demande(idDem, idServ, idMed, qtte);
-        Passerelle.CreaDemande(uneDemande);
+        
+        Passerelle.CreaDemande(idServ, idMed, qtte);
         JOptionPane.showMessageDialog(null, "Demande créée");
     }//GEN-LAST:event_btnVActionPerformed
 
@@ -204,6 +252,15 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnVMouseClicked
+
+    private void txtQtteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQtteActionPerformed
+
+    private void txtMedicamentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMedicamentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMedicamentActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -240,12 +297,12 @@ public class CreationDeDemande extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreationDeDemande().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+
     private javax.swing.JTextField TFD;
     private javax.swing.JTextField TFQ;
     private javax.swing.JButton btnAnnuler;
@@ -253,9 +310,11 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxMedicament;
     private javax.swing.JComboBox<String> cbxService;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblService;
+    private javax.swing.JTextField txtMedicament;
+    private javax.swing.JTextField txtQtte;
     // End of variables declaration//GEN-END:variables
 }

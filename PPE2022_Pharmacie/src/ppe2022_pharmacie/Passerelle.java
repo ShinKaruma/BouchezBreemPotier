@@ -1,3 +1,4 @@
+﻿
 package ppe2022_pharmacie;
 
 import java.io.UnsupportedEncodingException;
@@ -300,17 +301,17 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         return lesMedicaments;
     }
 
-    public static void CreaDemande(Demande uneDemande) {
+
+    public static void CreaDemande(int idServ, int idMed, int qtte) {
         if (pdo == null) {
             Connection();
         }
         try {
-            String requete = "insert into demande values (?, ?, ?, ?)";
+            String requete = "insert into demande (idservice, idmedicament, quantite) values (?, ?, ?)";
             PreparedStatement prepare = pdo.prepareStatement(requete);
-            prepare.setInt(1, uneDemande.getIdD());
-            prepare.setInt(2, uneDemande.getIdS());
-            prepare.setInt(3, uneDemande.getIdM());
-            prepare.setInt(4, uneDemande.getQtte());
+            prepare.setInt(1, idServ);
+            prepare.setInt(2, idMed);
+            prepare.setInt(3, qtte);
             int res = prepare.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -368,14 +369,16 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         return true;
     }
 
-    public static String getService(int idService) {
+    public static Service getService(int idService) {
         String requete = "select libelle from service where idservice = " + idService;
-        String service = "";
+        Service service = null;
+        String libelleService;
         try {
             Statement state = pdo.createStatement();
             ResultSet serviceResultat = state.executeQuery(requete);
             if (serviceResultat.next()) {
-                service = serviceResultat.getString(1);
+                libelleService = serviceResultat.getString(1);
+                service = new Service(idService, libelleService);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -459,7 +462,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
             Connection();
         }
         try {
-            String requete = "delete from demande where idd=?";
+            String requete = "delete from demande where iddemande=?";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, idD);
             prepare.executeUpdate();
