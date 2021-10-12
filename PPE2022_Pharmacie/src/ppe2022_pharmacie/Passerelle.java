@@ -1,3 +1,4 @@
+
 package ppe2022_pharmacie;
 
 import java.io.UnsupportedEncodingException;
@@ -280,8 +281,8 @@ public class Passerelle {
             String requete = "insert into demande (idservice, idmedicament, quantite) values (?, ?, ?)";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, uneDemande.getIdD());
-            prepare.setInt(2, uneDemande.getIdS());
-            prepare.setInt(3, uneDemande.getIdM());
+            prepare.setInt(2, uneDemande.getService().getIdService());
+            prepare.setInt(3, uneDemande.getMedicament().getId());
             prepare.setInt(4, uneDemande.getQtte());
             int res = prepare.executeUpdate();
         } catch (Exception e) {
@@ -340,14 +341,16 @@ public class Passerelle {
         return true;
     }
 
-    public static String getService(int idService) {
+    public static Service getService(int idService) {
         String requete = "select libelle from service where idservice = " + idService;
-        String service = "";
+        Service service = null;
+        String libelleService;
         try {
             Statement state = pdo.createStatement();
             ResultSet serviceResultat = state.executeQuery(requete);
             if (serviceResultat.next()) {
-                service = serviceResultat.getString(1);
+                libelleService = serviceResultat.getString(1);
+                service = new Service(idService, libelleService);
             }
         } catch (Exception e) {
             System.out.println(e);

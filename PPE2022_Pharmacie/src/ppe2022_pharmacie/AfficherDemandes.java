@@ -166,8 +166,8 @@ public class AfficherDemandes extends javax.swing.JFrame {
         int choix = ListD.getSelectedIndex();
         Object val = ListD.getModel().getElementAt(choix);
         Demande uneDmd = (Demande) val;
-        int qtteM = Passerelle.avoirQtte(uneDmd.getIdM());
-        Passerelle.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getIdM());
+        int qtteM = Passerelle.avoirQtte(uneDmd.getMedicament().getId());
+        Passerelle.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getMedicament().getId());
         Passerelle.SupprDemande(uneDmd.getIdD());
         //Actualisation
         DefaultListModel listModel = new DefaultListModel();

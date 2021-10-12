@@ -8,18 +8,18 @@ public class Demande {
 
     @Override
     public String toString() {
-        return "Demande{" + "idD=" + idD + ", idS=" + idS + ", idM=" + idM + ", qtte=" + qtte + '}';
+        return "Demande{" + "idD=" + idD + ", service = " + service.getLibelle() + ", medicament= " + medicament.getLibelle() + ", qtte=" + qtte + '}';
     }
     
     private int idD;
-    private int idS;
-    private int idM;
+    private Service service;
+    private Stock medicament;
     private int qtte;
 
     public Demande(int idD, int idS, int idM, int qtte) {
         this.idD = idD;
-        this.idS = idS;
-        this.idM =idM ;
+        this.service = Passerelle.getService(idS);
+        this.medicament = Passerelle.donnerUnStock(idM);
         this.qtte = qtte;
     }
 
@@ -31,20 +31,20 @@ public class Demande {
         this.idD = idD;
     }
 
-    public int getIdS() {
-        return idS;
+    public Service getService() {
+        return service;
     }
 
-    public void setIdS(int idS) {
-        this.idS = idS;
+    public void setService(Service service) {
+        this.service = service;
     }
 
-    public int getIdM() {
-        return idM;
+    public Stock getMedicament() {
+        return medicament;
     }
 
-    public void setIdM(int idM) {
-        this.idM = idM;
+    public void setMedicament(Stock medicament) {
+        this.medicament = medicament;
     }
 
     public int getQtte() {
