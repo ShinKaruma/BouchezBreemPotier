@@ -1,4 +1,4 @@
-﻿/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -41,33 +41,28 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        TFD = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         btnV = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        TFQ = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        btnAnnuler = new javax.swing.JButton();
-        cbxService = new javax.swing.JComboBox<>();
-        cbxMedicament = new javax.swing.JComboBox<>();
-        txtMedicament = new javax.swing.JTextField();
         txtQtte = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnAnnuler = new javax.swing.JButton();
+        cbxMedicament = new javax.swing.JComboBox<>();
         lblService = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Création d'une Demande");
 
-        btnV.setText("Valider");
-        btnV.addActionListener(new java.awt.event.ActionListener() {
+        TFD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVActionPerformed(evt);
+                TFDActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Service:");
+        jLabel2.setText("Entrer l'id de la Demande:");
 
         btnV.setText("Valider");
         btnV.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,19 +71,12 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         });
         btnV.addActionListener(new java.awt.event.ActionListener() {
-        txtMedicament.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMedicamentActionPerformed(evt);
+                btnVActionPerformed(evt);
             }
         });
-
 
         jLabel3.setText("Entrer l'id du Service:");
-        txtQtte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQtteActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Entrer l'id du Médicament:");
 
@@ -106,19 +94,13 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         });
 
-        cbxService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxService.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxServiceActionPerformed(evt);
-            }
-        });
-
         cbxMedicament.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxMedicament.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxMedicamentActionPerformed(evt);
             }
         });
+
         lblService.setText(".");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,22 +120,9 @@ public class CreationDeDemande extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(TFD)
-                            .addComponent(TFQ, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                            .addComponent(cbxService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel1)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblService, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtMedicament)
-                        .addComponent(txtQtte, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
-
+                            .addComponent(txtQtte, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(cbxMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(138, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -167,28 +136,23 @@ public class CreationDeDemande extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(TFD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lblService))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-
-                    .addComponent(jLabel3)
-                    .addComponent(cbxService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbxMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-
-                    .addComponent(txtMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtQtte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                    .addComponent(txtQtte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnV)
                     .addComponent(btnAnnuler))
@@ -205,14 +169,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
     private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
         // TODO add your handling code here:
-        String SidDem = TFD.getText();
-        String SidServ = TFS.getText();
-        Object medSelec= cbxMedicament.getSelectedItem();
-        String Sqtte = TFQ.getText();
-
-    private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
-        // TODO add your handling code here:
-        String SidMed = txtMedicament.getText();
+        String SidMed = txtQtte.getText();
         String Sqtte = txtQtte.getText();
 
 
@@ -234,10 +191,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private void btnAnnulerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnnulerMouseClicked
         dispose();
     }//GEN-LAST:event_btnAnnulerMouseClicked
-
-    private void cbxServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxServiceActionPerformed
-
-    }//GEN-LAST:event_cbxServiceActionPerformed
 
     private void cbxMedicamentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMedicamentActionPerformed
         // TODO add your handling code here:
@@ -302,19 +255,16 @@ public class CreationDeDemande extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-
     private javax.swing.JTextField TFD;
-    private javax.swing.JTextField TFQ;
     private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnV;
     private javax.swing.JComboBox<String> cbxMedicament;
-    private javax.swing.JComboBox<String> cbxService;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblService;
-    private javax.swing.JTextField txtMedicament;
     private javax.swing.JTextField txtQtte;
     // End of variables declaration//GEN-END:variables
 }

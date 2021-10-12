@@ -1,4 +1,4 @@
-﻿package ppe2022_pharmacie;
+package ppe2022_pharmacie;
 
 /**
  *
@@ -8,8 +8,6 @@ public class Demande {
 
     @Override
     public String toString() {
-        return "Demande n°" + idD + ", Numero de service:" + idS + ", id Medicament:" + idM + ", Quantitée:" + qtte;
-
         return "Demande{" + "idD=" + idD + ", service = " + service.getLibelle() + ", medicament= " + medicament.getLibelle() + ", qtte=" + qtte + '}';
 
     }

@@ -1,4 +1,4 @@
-﻿
+
 package ppe2022_pharmacie;
 
 import java.io.UnsupportedEncodingException;
