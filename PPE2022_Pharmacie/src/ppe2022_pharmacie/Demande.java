@@ -8,7 +8,7 @@ public class Demande {
 
     @Override
     public String toString() {
-        return "Demande{" + "idD=" + idD + ", idS=" + idS + ", idM=" + idM + ", qtte=" + qtte + '}';
+        return "Demande n°" + idD + ", Numero de service:" + idS + ", id Medicament:" + idM + ", Quantitée:" + qtte;
     }
     
     private int idD;

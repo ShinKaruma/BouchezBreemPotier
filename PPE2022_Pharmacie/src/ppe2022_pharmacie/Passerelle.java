@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jakarta.xml.bind.DatatypeConverter;
+import javax.xml.bind.DatatypeConverter;
 
 public class Passerelle {
 
@@ -244,7 +244,7 @@ public class Passerelle {
         return ArrayCategorie;
     }
 
-    public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
+public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         if (pdo == null) {
             Connection();
         }
@@ -270,6 +270,34 @@ public class Passerelle {
             System.out.println("Erreur donner tous les stocks");
         }
         return lesStocks;
+    }
+
+    public static ArrayList<Stock> listerMedicament(String pMedicament) {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList<Stock> lesMedicaments = new ArrayList<Stock>();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select * from stock ";
+            ResultSet medicResultat = state.executeQuery(requete);
+            while (medicResultat.next()) {
+                int id = medicResultat.getInt(1);
+                String libelle = medicResultat.getString(2);
+                int qtteStock = medicResultat.getInt(3);
+                int seuil = medicResultat.getInt(4);
+                String categorie = medicResultat.getString(5);
+                Stock unMedic = new Stock(id, libelle, qtteStock, seuil, categorie);
+                lesMedicaments.add(unMedic);
+            }
+            medicResultat.close();
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner tous les stocks");
+        }
+        return lesMedicaments;
     }
 
     public static void CreaDemande(Demande uneDemande) {
