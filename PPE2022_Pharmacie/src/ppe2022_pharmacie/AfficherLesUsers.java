@@ -6,6 +6,7 @@ package ppe2022_pharmacie;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,6 +18,9 @@ public class AfficherLesUsers extends javax.swing.JFrame {
      * Creates new form AfficherLesUsers
      */
     public AfficherLesUsers() {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         Passerelle.Connection();
 

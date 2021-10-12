@@ -277,7 +277,7 @@ public class Passerelle {
             Connection();
         }
         try {
-            String requete = "insert into demande values (?, ?, ?, ?)";
+            String requete = "insert into demande (idservice, idmedicament, quantite) values (?, ?, ?)";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, uneDemande.getIdD());
             prepare.setInt(2, uneDemande.getIdS());
@@ -431,7 +431,7 @@ public class Passerelle {
             Connection();
         }
         try {
-            String requete = "delete from demande where idd=?";
+            String requete = "delete from demande where iddemande=?";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, idD);
             prepare.executeUpdate();

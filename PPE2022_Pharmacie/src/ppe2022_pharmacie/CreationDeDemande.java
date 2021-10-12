@@ -5,6 +5,7 @@
  */
 package ppe2022_pharmacie;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +18,9 @@ public class CreationDeDemande extends javax.swing.JFrame {
      * Creates new form CreationDeDemande
      */
     public CreationDeDemande() {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 

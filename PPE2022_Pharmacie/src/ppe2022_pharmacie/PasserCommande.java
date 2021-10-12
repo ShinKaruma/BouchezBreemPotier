@@ -1,6 +1,7 @@
 package ppe2022_pharmacie;
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 public class PasserCommande extends javax.swing.JFrame {
     
@@ -8,6 +9,8 @@ public class PasserCommande extends javax.swing.JFrame {
 
     public PasserCommande(Stock unPdt) {
 
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         Passerelle.Connection();
         

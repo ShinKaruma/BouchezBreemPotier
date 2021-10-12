@@ -7,6 +7,7 @@ package ppe2022_pharmacie;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,6 +18,9 @@ public class AfficherDemandes extends javax.swing.JFrame {
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
 
     public AfficherDemandes(boolean pharmacien, Utilisateur unUser) {
+        
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Passerelle.Connection();
         initComponents();
 

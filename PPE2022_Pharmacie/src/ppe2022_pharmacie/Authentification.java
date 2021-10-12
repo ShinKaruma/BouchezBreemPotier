@@ -10,6 +10,7 @@ import java.security.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.xml.bind.DatatypeConverter;
+import javax.swing.JFrame;
 
 /**
  *
@@ -21,8 +22,11 @@ public class Authentification extends javax.swing.JFrame {
      * Creates new form Authentification
      */
     public Authentification() {
-        initComponents();
         Passerelle.Connection();
+        initComponents();
+        this.setTitle("Se connecter");
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
