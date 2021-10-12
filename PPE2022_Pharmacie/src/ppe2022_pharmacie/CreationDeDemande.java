@@ -17,11 +17,16 @@ public class CreationDeDemande extends javax.swing.JFrame {
     /**
      * Creates new form CreationDeDemande
      */
-    public CreationDeDemande() {
-        
+    
+    private int idService;
+    
+    public CreationDeDemande(Utilisateur unUser) {
+        idService = unUser.getService().getIdService();
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
+        
+        lblService.setText(unUser.getService().getLibelle());
     }
 
     /**
@@ -34,28 +39,18 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        TFD = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         btnV = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        TFS = new javax.swing.JTextField();
-        TFM = new javax.swing.JTextField();
-        TFQ = new javax.swing.JTextField();
+        txtMedicament = new javax.swing.JTextField();
+        txtQtte = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnAnnuler = new javax.swing.JButton();
+        lblService = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Création d'une Demande");
-
-        TFD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFDActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Entrer l'id de la Demande:");
 
         btnV.setText("Valider");
         btnV.addActionListener(new java.awt.event.ActionListener() {
@@ -64,11 +59,17 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Entrer l'id du Service:");
+        jLabel3.setText("Service:");
 
-        TFS.addActionListener(new java.awt.event.ActionListener() {
+        txtMedicament.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFSActionPerformed(evt);
+                txtMedicamentActionPerformed(evt);
+            }
+        });
+
+        txtQtte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQtteActionPerformed(evt);
             }
         });
 
@@ -88,6 +89,8 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         });
 
+        lblService.setText(".");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,19 +98,17 @@ public class CreationDeDemande extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TFM)
-                            .addComponent(TFD)
-                            .addComponent(TFS)
-                            .addComponent(TFQ, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel1)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblService, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtMedicament)
+                        .addComponent(txtQtte, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
                 .addContainerGap(138, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -121,23 +122,19 @@ public class CreationDeDemande extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblService))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TFD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TFS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TFM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TFQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtQtte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnV)
                     .addComponent(btnAnnuler))
@@ -147,29 +144,16 @@ public class CreationDeDemande extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TFDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TFDActionPerformed
-
-    private void TFSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TFSActionPerformed
-
     private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
         // TODO add your handling code here:
-        String SidDem = TFD.getText();
-        String SidServ = TFS.getText();
-        String SidMed = TFM.getText();
-        String Sqtte = TFQ.getText();
+        String SidMed = txtMedicament.getText();
+        String Sqtte = txtQtte.getText();
 
-        int idDem = Integer.parseInt(SidDem);
-        int idServ = Integer.parseInt(SidServ);
+        int idServ = idService;
         int idMed = Integer.parseInt(SidMed);
-        
-        
         int qtte = Integer.parseInt(Sqtte);
-        Demande uneDemande = new Demande(idDem, idServ, idMed, qtte);
-        Passerelle.CreaDemande(uneDemande);
+        
+        Passerelle.CreaDemande(idServ, idMed, qtte);
         JOptionPane.showMessageDialog(null, "Demande créée");
     }//GEN-LAST:event_btnVActionPerformed
 
@@ -180,6 +164,14 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private void btnAnnulerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnnulerMouseClicked
         dispose();
     }//GEN-LAST:event_btnAnnulerMouseClicked
+
+    private void txtQtteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQtteActionPerformed
+
+    private void txtMedicamentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMedicamentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMedicamentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,22 +208,19 @@ public class CreationDeDemande extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreationDeDemande().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TFD;
-    private javax.swing.JTextField TFM;
-    private javax.swing.JTextField TFQ;
-    private javax.swing.JTextField TFS;
     private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnV;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblService;
+    private javax.swing.JTextField txtMedicament;
+    private javax.swing.JTextField txtQtte;
     // End of variables declaration//GEN-END:variables
 }

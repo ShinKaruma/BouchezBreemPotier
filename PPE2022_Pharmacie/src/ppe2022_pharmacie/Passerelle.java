@@ -273,17 +273,16 @@ public class Passerelle {
         return lesStocks;
     }
 
-    public static void CreaDemande(Demande uneDemande) {
+    public static void CreaDemande(int idServ, int idMed, int qtte) {
         if (pdo == null) {
             Connection();
         }
         try {
             String requete = "insert into demande (idservice, idmedicament, quantite) values (?, ?, ?)";
             PreparedStatement prepare = pdo.prepareStatement(requete);
-            prepare.setInt(1, uneDemande.getIdD());
-            prepare.setInt(2, uneDemande.getService().getIdService());
-            prepare.setInt(3, uneDemande.getMedicament().getId());
-            prepare.setInt(4, uneDemande.getQtte());
+            prepare.setInt(1, idServ);
+            prepare.setInt(2, idMed);
+            prepare.setInt(3, qtte);
             int res = prepare.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

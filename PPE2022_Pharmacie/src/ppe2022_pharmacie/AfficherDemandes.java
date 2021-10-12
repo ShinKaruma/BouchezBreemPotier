@@ -16,9 +16,10 @@ import javax.swing.JFrame;
 public class AfficherDemandes extends javax.swing.JFrame {
 
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
+    private Utilisateur unUser;
 
     public AfficherDemandes(boolean pharmacien, Utilisateur unUser) {
-        
+        this.unUser = unUser;
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Passerelle.Connection();
@@ -182,7 +183,7 @@ public class AfficherDemandes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreerDemandeActionPerformed
 
     private void btnCreerDemandeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreerDemandeMouseClicked
-        new CreationDeDemande().setVisible(true);
+        new CreationDeDemande(unUser).setVisible(true);
     }//GEN-LAST:event_btnCreerDemandeMouseClicked
 
     private void btnDeconnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeconnexionMouseClicked
