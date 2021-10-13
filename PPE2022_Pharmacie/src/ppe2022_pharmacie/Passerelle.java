@@ -384,7 +384,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
     }
 
     public static ArrayList<Utilisateur> getTousLesUser() {
-        String requete = "select login, service.libelle, service, idpersonnel from authentification join service on authentification.service = service.idservice";
+        String requete = "select login, service.libelle, service, idpersonnel, passe from authentification join service on authentification.service = service.idservice";
         ArrayList<Utilisateur> lesUsers = new ArrayList<>();
         try {
             Statement state = pdo.createStatement();
@@ -394,8 +394,9 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
                 String service = userResultat.getString(2);
                 int idService = userResultat.getInt(3);
                 int idUser = userResultat.getInt(4);
+                String passe = userResultat.getString(5);
 
-                lesUsers.add(new Utilisateur(login, service, idService, idUser));
+                lesUsers.add(new Utilisateur(login, service, idService, idUser, passe));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -529,17 +530,14 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         return idService;
     }
     
-    public static void modifUser(Utilisateur unUser, String passe){
+    public static void modifUser(Utilisateur unUser){
         String requete = "Update authentification set login = ?, passe=?, service=? where idpersonnel=?";
          try{
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte raw[] = md.digest(passe.getBytes("UTF-8"));
-            String hash;
-            hash = DatatypeConverter.printHexBinary(raw);
+            
             
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setString(1, unUser.getLogin());
-            prepare.setString(2, hash);
+            prepare.setString(2, unUser.getHash());
             prepare.setInt(3, unUser.getService().getIdService());
             prepare.setInt(4, unUser.getIdUser());
             prepare.executeUpdate();
