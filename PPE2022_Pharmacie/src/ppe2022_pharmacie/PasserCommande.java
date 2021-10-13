@@ -5,16 +5,16 @@ import javax.swing.JFrame;
 
 public class PasserCommande extends javax.swing.JFrame {
     
-    private Stock unPdt;
+    private Medicament unPdt;
 
-    public PasserCommande(Stock unPdt) {
+    public PasserCommande(Medicament unPdt) {
 
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        Passerelle.Connection();
+        DAO.Connection();
         
-        ArrayList<String> ArrayFournisseur = Passerelle.donnerFournisseur();
+        ArrayList<String> ArrayFournisseur = CommandeDAO.donnerFournisseur();
         for (String f : ArrayFournisseur) {
             cbxFournisseur.addItem(f);
         }
@@ -354,7 +354,7 @@ public class PasserCommande extends javax.swing.JFrame {
         String medicament = lblIdAfficherLibelle.getText();
         String qtte1 = txtQuantite.getText();
         int qtte = Integer.parseInt(qtte1);
-        if(Passerelle.ajouterCommande(fournisseur, medicament,qtte) == true){
+        if(CommandeDAO.ajouterCommande(fournisseur, medicament,qtte) == true){
             lblValider.setText("La commande est refusévalidé.");
         }else{
             lblValider.setText("La commande est validé.");

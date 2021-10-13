@@ -1,6 +1,6 @@
 package ppe2022_pharmacie;
 
-public class Stock {
+public class Medicament {
     //Attribut
     private int id;
     private String libelle;
@@ -9,7 +9,7 @@ public class Stock {
     private String categorie;
     
     //Constructeur
-    public Stock(int pId, String pLibelle, int pQtteStock, int pSeuil, String pCategorie){
+    public Medicament(int pId, String pLibelle, int pQtteStock, int pSeuil, String pCategorie){
         id = pId;
         libelle = pLibelle;
         qtteStock = pQtteStock;

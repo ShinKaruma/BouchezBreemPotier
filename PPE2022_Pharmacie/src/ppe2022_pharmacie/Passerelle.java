@@ -1,4 +1,3 @@
-
 package ppe2022_pharmacie;
 
 import java.security.MessageDigest;
@@ -77,11 +76,12 @@ public class Passerelle {
         return info;
     }
 
-    public static ArrayList<Stock> donnerTousLesStocks() {
+    //MedicamentDAO (Fait)
+    public static ArrayList<Medicament> donnerTousLesStocks() {
         if (pdo == null) {
             Connection();
         }
-        ArrayList<Stock> lesStocks = new ArrayList<Stock>();
+        ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
             String requete = "select * from stock";
@@ -92,7 +92,7 @@ public class Passerelle {
                 int qtteStock = stockResultat.getInt(3);
                 int seuil = stockResultat.getInt(4);
                 String categorie = stockResultat.getString(5);
-                Stock unStock = new Stock(id, libelle, qtteStock, seuil, categorie);
+                Medicament unStock = new Medicament(id, libelle, qtteStock, seuil, categorie);
                 lesStocks.add(unStock);
             }
             stockResultat.close();
@@ -104,7 +104,8 @@ public class Passerelle {
         }
         return lesStocks;
     }
-    
+
+    //CommandesDAO (Fait)
     public static ArrayList<Commandes> donnerToutesLesCommandes() {
         if (pdo == null) {
             Connection();
@@ -132,26 +133,26 @@ public class Passerelle {
         return lesCommandes;
     }
 
-    public static Stock donnerUnStock(int idM) {
+    //MedicamentDAO (Fait)
+    public static Medicament donnerUnStock(int idM) {
         if (pdo == null) {
             Connection();
         }
-        Stock unMedic=null;
+        Medicament unMedic = null;
         try {
             Statement state = pdo.createStatement();
             String requete = "select * from stock where idm=?";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, idM);
-            
-            
-            ResultSet res=prepare.executeQuery();
-            if(res.next()){
+
+            ResultSet res = prepare.executeQuery();
+            if (res.next()) {
                 int id = res.getInt(1);
                 String libelle = res.getString(2);
                 int qtteStock = res.getInt(3);
                 int seuil = res.getInt(4);
                 String categorie = res.getString(5);
-                unMedic = new Stock(id, libelle, qtteStock, seuil, categorie);
+                unMedic = new Medicament(id, libelle, qtteStock, seuil, categorie);
             }
 
             state.close();
@@ -163,11 +164,12 @@ public class Passerelle {
         return unMedic;
     }
 
-    public static ArrayList<Stock> donnerStockSeuil() {
+    //MedicamentDAO (Fait)
+    public static ArrayList<Medicament> donnerStockSeuil() {
         if (pdo == null) {
             Connection();
         }
-        ArrayList<Stock> lesStocks = new ArrayList<Stock>();
+        ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
             String requete = "select * from stock where qtte <= seuil";
@@ -178,7 +180,7 @@ public class Passerelle {
                 int qtteStock = stockResultat.getInt(3);
                 int seuil = stockResultat.getInt(4);
                 String categorie = stockResultat.getString(5);
-                Stock unStock = new Stock(id, libelle, qtteStock, seuil, categorie);
+                Medicament unStock = new Medicament(id, libelle, qtteStock, seuil, categorie);
                 lesStocks.add(unStock);
             }
             stockResultat.close();
@@ -190,7 +192,8 @@ public class Passerelle {
         }
         return lesStocks;
     }
-    
+
+    //CommandesDAO
     public static ArrayList<String> donnerFournisseur() {
         if (pdo == null) {
             Connection();
@@ -202,7 +205,7 @@ public class Passerelle {
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 String fournisseur = stockResultat.getString(1);
-//                Stock unStock = new Stock(categorie);
+//                Medicament unStock = new Medicament(categorie);
                 ArrayFournisseur.add(fournisseur);
             }
             stockResultat.close();
@@ -215,6 +218,7 @@ public class Passerelle {
         return ArrayFournisseur;
     }
 
+    //MedicamentDAO (Fait)
     public static ArrayList<String> donnerCategorie() {
         if (pdo == null) {
             Connection();
@@ -228,7 +232,7 @@ public class Passerelle {
             ArrayCategorie.add(Tous);
             while (stockResultat.next()) {
                 String categorie = stockResultat.getString(1);
-//                Stock unStock = new Stock(categorie);
+//                Medicament unStock = new Medicament(categorie);
                 ArrayCategorie.add(categorie);
             }
             stockResultat.close();
@@ -241,11 +245,12 @@ public class Passerelle {
         return ArrayCategorie;
     }
 
-public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
+    //MedicamentDAO (Fait)
+    public static ArrayList<Medicament> AfficheEnFonctionCategorie(String pCategorie) {
         if (pdo == null) {
             Connection();
         }
-        ArrayList<Stock> lesStocks = new ArrayList<Stock>();
+        ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
             String requete = "select * from stock where categorie = \'" + pCategorie + "\'";
@@ -256,7 +261,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
                 int qtteStock = stockResultat.getInt(3);
                 int seuil = stockResultat.getInt(4);
                 String categorie = stockResultat.getString(5);
-                Stock unStock = new Stock(id, libelle, qtteStock, seuil, categorie);
+                Medicament unStock = new Medicament(id, libelle, qtteStock, seuil, categorie);
                 lesStocks.add(unStock);
             }
             stockResultat.close();
@@ -269,11 +274,12 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         return lesStocks;
     }
 
-    public static ArrayList<Stock> listerMedicament(String pMedicament) {
+    //MedicamentDAO (Fait)
+    public static ArrayList<Medicament> listerMedicament(String pMedicament) {
         if (pdo == null) {
             Connection();
         }
-        ArrayList<Stock> lesMedicaments = new ArrayList<Stock>();
+        ArrayList<Medicament> lesMedicaments = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
             String requete = "select * from stock ";
@@ -284,7 +290,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
                 int qtteStock = medicResultat.getInt(3);
                 int seuil = medicResultat.getInt(4);
                 String categorie = medicResultat.getString(5);
-                Stock unMedic = new Stock(id, libelle, qtteStock, seuil, categorie);
+                Medicament unMedic = new Medicament(id, libelle, qtteStock, seuil, categorie);
                 lesMedicaments.add(unMedic);
             }
             medicResultat.close();
@@ -296,7 +302,6 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         }
         return lesMedicaments;
     }
-
 
     public static void CreaDemande(int idServ, int idMed, int qtte) {
         if (pdo == null) {
@@ -338,7 +343,9 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
             System.out.println("Erreur dans l'ajout d'un utilisateur");
         }
     }
+
     
+    //CommandesDAO (Fait)
     public static boolean ajouterCommande(String fournisseur, String medicament, int qtte) {
         if (pdo == null) {
             Connection();
@@ -347,7 +354,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
             Statement state = pdo.createStatement();
             String requete1 = "select max(idc) from commandes";
             ResultSet stockResultat = state.executeQuery(requete1);
-            if(stockResultat.next()){
+            if (stockResultat.next()) {
                 int idc = stockResultat.getInt(1) + 1;
                 String requete2 = "insert into commandes (idc,fournisseur, medicament, qtte) values(?, ?, ?, ?)";
                 PreparedStatement prepare = pdo.prepareStatement(requete2);
@@ -528,29 +535,28 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         }
         return idService;
     }
-    
-    public static void modifUser(Utilisateur unUser, String passe){
+
+    public static void modifUser(Utilisateur unUser, String passe) {
         String requete = "Update authentification set login = ?, passe=?, service=? where idpersonnel=?";
-         try{
+        try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte raw[] = md.digest(passe.getBytes("UTF-8"));
             String hash;
             hash = DatatypeConverter.printHexBinary(raw);
-            
+
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setString(1, unUser.getLogin());
             prepare.setString(2, hash);
             prepare.setInt(3, unUser.getService().getIdService());
             prepare.setInt(4, unUser.getIdUser());
             prepare.executeUpdate();
-            
-            
-         }catch (Exception e) {
+
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Erreur dans la modification de l'utilisateur");
         }
     }
-    
+
     public static ArrayList<Demande> AfficherDemandeParService(int idService) {
         if (pdo == null) {
             Connection();
@@ -558,7 +564,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "SELECT * FROM demande where idservice="+idService;
+            String requete = "SELECT * FROM demande where idservice=" + idService;
             ResultSet demandeResultat = state.executeQuery(requete);
 
             while (demandeResultat.next()) {
