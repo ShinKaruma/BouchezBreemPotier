@@ -15,11 +15,14 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class AjouterUtilisateur extends javax.swing.JFrame {
 
+    private static final UtilisateurDAO passerelleUser = new UtilisateurDAO();
+    private static final ServiceDAO passerelleService = new ServiceDAO();
+
     /**
      * Creates new form AjouterUtilisateur
      */
     public AjouterUtilisateur() {
-        
+
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
@@ -27,27 +30,27 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         lblId.setVisible(false);
         lblOutputID.setVisible(false);
         Passerelle.Connection();
-        
-        for (Service s : Passerelle.getTousLesServices()) {
+
+        for (Service s : passerelleService.findAll()) {
             cbxService.addItem(s.getLibelle());
         }
     }
-    
+
     public AjouterUtilisateur(Utilisateur unUser) {
-        
+
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
         initComponents();
         btnValider.setVisible(false);
         lblOutputID.setText(String.valueOf(unUser.getIdUser()));
         Passerelle.Connection();
         txtLogin.setText(unUser.getLogin());
-        
-        for (Service s : Passerelle.getTousLesServices()) {
+
+        for (Service s : passerelleService.findAll()) {
             cbxService.addItem(s.getLibelle());
         }
-        
+
         cbxService.setSelectedItem(unUser.getService());
     }
 
@@ -192,13 +195,22 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         for (char unChar : passeChar) {
             passe += unChar;
         }
+        String hash = "";
+        try{
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte raw[] = md.digest(passe.getBytes("UTF-8"));
+        hash = DatatypeConverter.printHexBinary(raw);
+        System.out.println(hash);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
         String service = (String) cbxService.getSelectedItem();
+        int idService = passerelleService.getIdService(service);
+
+        Utilisateur unUser = new Utilisateur(login, service, idService, 2, hash);
         
-        
-        
-        int idService = Passerelle.getIdService(service);
-        
-        Passerelle.ajouterUtilisateur(login, passe, idService);
+        passerelleUser.create(unUser);
     }//GEN-LAST:event_btnValiderMouseClicked
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
@@ -211,19 +223,19 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         int idUser = Integer.parseInt(lblOutputID.getText());
         String service = (String) cbxService.getSelectedItem();
         String hash = "";
-        try{
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
             byte raw[] = md.digest(passe.getBytes("UTF-8"));
             hash = DatatypeConverter.printHexBinary(raw);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-        int idService = Passerelle.getIdService(service);
-        
+
+        int idService = passerelleService.getIdService(service);
+
         Utilisateur unUser = new Utilisateur(login, service, idService, idUser, hash);
-        
-        Passerelle.modifUser(unUser);
+
+        passerelleUser.update(unUser);
     }//GEN-LAST:event_btnModifierMouseClicked
 
     /**

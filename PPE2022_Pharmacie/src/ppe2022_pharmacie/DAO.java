@@ -15,12 +15,12 @@ import java.util.ArrayList;
  */
 public abstract class DAO<T> {
     
-    private final String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
-    private final String user = "potier";
-    private final String passwd = "potier";
     protected static Connection pdo;
     
     public void Connection() {
+        final String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
+    final String user = "potier";
+    final String passwd = "potier";
         //Etablir connexion
         try {
             pdo = DriverManager.getConnection(url, user, passwd);

@@ -1,4 +1,3 @@
-
 package ppe2022_pharmacie;
 
 import java.security.MessageDigest;
@@ -241,7 +240,7 @@ public class Passerelle {
         return ArrayCategorie;
     }
 
-public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
+    public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         if (pdo == null) {
             Connection();
         }
@@ -296,7 +295,6 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         }
         return lesMedicaments;
     }
-
 
     public static void CreaDemande(int idServ, int idMed, int qtte) {
         if (pdo == null) {

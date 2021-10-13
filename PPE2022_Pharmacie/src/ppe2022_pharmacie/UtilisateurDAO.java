@@ -98,5 +98,47 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         }
         return lesUsers;
     }
+    
+    public int[] Authentification(String login, String password) {
+        int[] infos = new int[3];
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "Select count(*), service, idpersonnel from authentification where login ='" + login + "' and passe='" + password + "' group by service, idpersonnel";
+            ResultSet authResultat = state.executeQuery(requete);
+            if (authResultat.next()) {
+                infos[0] = authResultat.getInt(1);
+                infos[1] = authResultat.getInt(2);
+                infos[2] = authResultat.getInt(3);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur Dans la connexion");
+        }
+        return infos;
+    }
+    
+    public String getHashMdp(String login) {
+        String info = "";
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select passe from authentification where login = '" + login + "'";
+            ResultSet authResultat = state.executeQuery(requete);
+            if (authResultat.next()) {
+                info = authResultat.getString(1);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans la récupération du mdp");
+        }
+        return info;
+    }
 
 }
