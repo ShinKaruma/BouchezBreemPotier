@@ -14,7 +14,7 @@ public class Demande {
     
     private int idD;
     private Service service;
-    private Stock medicament;
+    private Medicament medicament;
     private int qtte;
 
     public Demande(int idD, int idS, int idM, int qtte) {
@@ -40,11 +40,11 @@ public class Demande {
         this.service = service;
     }
 
-    public Stock getMedicament() {
+    public Medicament getMedicament() {
         return medicament;
     }
 
-    public void setMedicament(Stock medicament) {
+    public void setMedicament(Medicament medicament) {
         this.medicament = medicament;
     }
 

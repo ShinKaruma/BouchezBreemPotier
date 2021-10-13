@@ -13,14 +13,14 @@ import java.util.ArrayList;
  * @author sio2021
  * @param <T>
  */
-public abstract class DAO<T> {
-    
-    private final String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
-    private final String user = "potier";
-    private final String passwd = "potier";
+abstract class DAO<T> {
+
     protected static Connection pdo;
-    
-    public void Connection() {
+
+    public static void Connection() {
+        String url = "jdbc:postgresql://192.168.1.245:5432/PPE2022_Hopital_Pharmacie_BBP";
+        String user = "potier";
+        String passwd = "potier";
         //Etablir connexion
         try {
             pdo = DriverManager.getConnection(url, user, passwd);
@@ -31,14 +31,14 @@ public abstract class DAO<T> {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public abstract Boolean create(T unObjet);
-    
+
     public abstract T find(int id);
-    
+
     public abstract Boolean update(T unObjet);
-    
+
     public abstract Boolean delete(T unObjet);
-    
-    public abstract ArrayList<T> findAll();    
+
+    public abstract ArrayList<T> findAll();
 }

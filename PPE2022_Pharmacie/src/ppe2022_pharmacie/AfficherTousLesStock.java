@@ -8,9 +8,10 @@ import javax.swing.JOptionPane;
 
 public class AfficherTousLesStock extends javax.swing.JFrame {
 
-    ArrayList<Stock> unStock = new ArrayList<Stock>();
+    ArrayList<Medicament> unStock = new ArrayList<Medicament>();
     Scanner sc = new Scanner(System.in);
     private Utilisateur unUser;
+    //MedicamentDAO
 
     public AfficherTousLesStock(Utilisateur unUtilisateur) {
         
@@ -18,16 +19,16 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         unUser = unUtilisateur;
         initComponents();
-        Passerelle.Connection();
-        unStock = Passerelle.donnerTousLesStocks();
+        DAO.Connection();
+        unStock = MedicamentDAO.donnerTousLesStocks();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+        for (Medicament pdt : MedicamentDAO.donnerTousLesStocks()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
 
-        ArrayList<String> ArrayCategorie = Passerelle.donnerCategorie();
+        ArrayList<String> ArrayCategorie = MedicamentDAO.donnerCategorie();
         for (String c : ArrayCategorie) {
             cbxCategorie.addItem(c);
         }
@@ -396,10 +397,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
 
-        unStock = Passerelle.donnerTousLesStocks();
+        unStock = MedicamentDAO.donnerTousLesStocks();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+        for (Medicament pdt : MedicamentDAO.donnerTousLesStocks()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
@@ -408,7 +409,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private void lstAfficherTousMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstAfficherTousMouseClicked
         int choix = lstAfficherTous.getSelectedIndex();
         Object val = lstAfficherTous.getModel().getElementAt(choix);
-        Stock unPdt = (Stock) val;
+        Medicament unPdt = (Medicament) val;
         
         PasserCommande g= new PasserCommande(unPdt);g.setVisible(true);
     }//GEN-LAST:event_lstAfficherTousMouseClicked
@@ -450,10 +451,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualiser3ActionPerformed
 
     private void btnSeuilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeuilMouseClicked
-        unStock = Passerelle.donnerStockSeuil();
+        unStock = MedicamentDAO.donnerStockSeuil();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : Passerelle.donnerStockSeuil()) {
+        for (Medicament pdt : MedicamentDAO.donnerStockSeuil()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
@@ -476,13 +477,13 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         String Tous = "Tous";
         if (cbxCategorie.getSelectedItem() == Tous) {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+            for (Medicament pdt : MedicamentDAO.donnerTousLesStocks()) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);
         } else {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : Passerelle.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
+            for (Medicament pdt : MedicamentDAO.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);
