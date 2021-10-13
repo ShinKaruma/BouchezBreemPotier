@@ -15,11 +15,11 @@ public class AfficherCommande extends javax.swing.JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        Passerelle.Connection();
-        uneCommande = Passerelle.donnerToutesLesCommandes();
+        DAO.Connection();
+        uneCommande = CommandeDAO.donnerToutesLesCommandes();
         
         DefaultListModel listModel = new DefaultListModel();
-        for (Commandes pdt : Passerelle.donnerToutesLesCommandes()) {
+        for (Commandes pdt : CommandeDAO.donnerToutesLesCommandes()) {
             listModel.addElement(pdt);
         }
         lstAfficherCommande.setModel(listModel);
@@ -138,10 +138,10 @@ public class AfficherCommande extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
 
-        uneCommande = Passerelle.donnerToutesLesCommandes();
+        uneCommande = CommandeDAO.donnerToutesLesCommandes();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Commandes pdt : Passerelle.donnerToutesLesCommandes()) {
+        for (Commandes pdt : CommandeDAO.donnerToutesLesCommandes()) {
             listModel.addElement(pdt);
         }
         lstAfficherCommande.setModel(listModel);

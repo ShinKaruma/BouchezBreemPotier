@@ -27,8 +27,8 @@ public class CreationDeDemande extends javax.swing.JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        ArrayList<Stock> ArrayMedic = Passerelle.donnerTousLesStocks();
-        for (Stock c: ArrayMedic) {
+        ArrayList<Medicament> ArrayMedic = Passerelle.donnerTousLesStocks();
+        for (Medicament c: ArrayMedic) {
             cbxMedicament.addItem(c.getLibelle());
         }
         
@@ -200,7 +200,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
         String Tous = "Tous";
         if (cbxMedicament.getSelectedItem() == Tous) {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+            for (Medicament pdt : Passerelle.donnerTousLesStocks()) {
                 listModel.addElement(pdt);
             }
         }
