@@ -562,7 +562,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "SELECT * FROM demande where ids="+idService;
+            String requete = "SELECT * FROM demande where idservice="+idService;
             ResultSet demandeResultat = state.executeQuery(requete);
 
             while (demandeResultat.next()) {
