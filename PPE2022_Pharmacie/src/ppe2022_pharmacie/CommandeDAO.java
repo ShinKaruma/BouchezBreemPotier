@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import static ppe2022_pharmacie.DAO.pdo;
-import static ppe2022_pharmacie.Passerelle.Connection;
 
 public class CommandeDAO extends DAO<Commandes>{
     @Override

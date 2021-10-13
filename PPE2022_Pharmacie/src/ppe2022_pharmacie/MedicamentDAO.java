@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import static ppe2022_pharmacie.Passerelle.Connection;
 
 public class MedicamentDAO extends DAO<Medicament>{
     
