@@ -1,4 +1,3 @@
-
 package ppe2022_pharmacie;
 
 import java.security.MessageDigest;
@@ -104,7 +103,7 @@ public class Passerelle {
         }
         return lesStocks;
     }
-    
+
     public static ArrayList<Commandes> donnerToutesLesCommandes() {
         if (pdo == null) {
             Connection();
@@ -136,16 +135,15 @@ public class Passerelle {
         if (pdo == null) {
             Connection();
         }
-        Stock unMedic=null;
+        Stock unMedic = null;
         try {
             Statement state = pdo.createStatement();
             String requete = "select * from stock where idm=?";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, idM);
-            
-            
-            ResultSet res=prepare.executeQuery();
-            if(res.next()){
+
+            ResultSet res = prepare.executeQuery();
+            if (res.next()) {
                 int id = res.getInt(1);
                 String libelle = res.getString(2);
                 int qtteStock = res.getInt(3);
@@ -190,7 +188,7 @@ public class Passerelle {
         }
         return lesStocks;
     }
-    
+
     public static ArrayList<String> donnerFournisseur() {
         if (pdo == null) {
             Connection();
@@ -241,7 +239,7 @@ public class Passerelle {
         return ArrayCategorie;
     }
 
-public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
+    public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         if (pdo == null) {
             Connection();
         }
@@ -297,7 +295,6 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         return lesMedicaments;
     }
 
-
     public static void CreaDemande(int idServ, int idMed, int qtte) {
         if (pdo == null) {
             Connection();
@@ -338,7 +335,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
             System.out.println("Erreur dans l'ajout d'un utilisateur");
         }
     }
-    
+
     public static boolean ajouterCommande(String fournisseur, String medicament, int qtte) {
         if (pdo == null) {
             Connection();
@@ -347,7 +344,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
             Statement state = pdo.createStatement();
             String requete1 = "select max(idc) from commandes";
             ResultSet stockResultat = state.executeQuery(requete1);
-            if(stockResultat.next()){
+            if (stockResultat.next()) {
                 int idc = stockResultat.getInt(1) + 1;
                 String requete2 = "insert into commandes (idc,fournisseur, medicament, qtte) values(?, ?, ?, ?)";
                 PreparedStatement prepare = pdo.prepareStatement(requete2);
@@ -529,26 +526,24 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         }
         return idService;
     }
-    
-    public static void modifUser(Utilisateur unUser){
+
+    public static void modifUser(Utilisateur unUser) {
         String requete = "Update authentification set login = ?, passe=?, service=? where idpersonnel=?";
-         try{
-            
-            
+        try {
+
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setString(1, unUser.getLogin());
             prepare.setString(2, unUser.getHash());
             prepare.setInt(3, unUser.getService().getIdService());
             prepare.setInt(4, unUser.getIdUser());
             prepare.executeUpdate();
-            
-            
-         }catch (Exception e) {
+
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Erreur dans la modification de l'utilisateur");
         }
     }
-    
+
     public static ArrayList<Demande> AfficherDemandeParService(int idService) {
         if (pdo == null) {
             Connection();
@@ -556,7 +551,7 @@ public static ArrayList<Stock> AfficheEnFonctionCategorie(String pCategorie) {
         ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "SELECT * FROM demande where idservice="+idService;
+            String requete = "SELECT * FROM demande where idservice=" + idService;
             ResultSet demandeResultat = state.executeQuery(requete);
 
             while (demandeResultat.next()) {

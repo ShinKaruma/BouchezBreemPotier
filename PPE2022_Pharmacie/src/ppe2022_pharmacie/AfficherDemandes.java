@@ -14,7 +14,7 @@ import javax.swing.JFrame;
  * @author sio2021
  */
 public class AfficherDemandes extends javax.swing.JFrame {
-
+    //DemandeDAO Passerelle=new DemandeDAO();
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
     private Utilisateur unUser;
 
