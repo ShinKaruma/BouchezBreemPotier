@@ -10,10 +10,12 @@ package ppe2022_pharmacie;
  */
 public class Utilisateur {
     private int idUser;
+    private String hash;
     private String login;
     private Service unService;
 
-    public Utilisateur(String login, String service, int idService, int idUser) {
+    public Utilisateur(String login, String service, int idService, int idUser, String Hash) {
+        this.hash = hash;
         this.login = login;
         this.unService = new Service(idService, service);
         this.idUser = idUser;
@@ -29,6 +31,22 @@ public class Utilisateur {
     
     public int getIdUser(){
         return idUser;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public Service getUnService() {
+        return unService;
+    }
+
+    public void setUnService(Service unService) {
+        this.unService = unService;
     }
 
     public void setLogin(String login) {

@@ -128,7 +128,7 @@ public class Authentification extends javax.swing.JFrame {
             int[] info = Passerelle.Authentification(login, hash);
             Service service = Passerelle.getService(info[1]);
             
-            Utilisateur unUtilisateur = new Utilisateur(login, service.getLibelle(), info[1], info[2]);
+            Utilisateur unUtilisateur = new Utilisateur(login, service.getLibelle(), info[1], info[2], hash);
             
             if (info[0] == 0) {
                 lblOutput.setText("Erreur dans le couple Login/mdp");

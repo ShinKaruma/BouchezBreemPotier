@@ -5,7 +5,9 @@
  */
 package ppe2022_pharmacie;
 
+import java.security.MessageDigest;
 import javax.swing.JFrame;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -208,14 +210,20 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         }
         int idUser = Integer.parseInt(lblOutputID.getText());
         String service = (String) cbxService.getSelectedItem();
-        
-        
+        String hash = "";
+        try{
+        MessageDigest md = MessageDigest.getInstance("MD5");
+            byte raw[] = md.digest(passe.getBytes("UTF-8"));
+            hash = DatatypeConverter.printHexBinary(raw);
+        }catch(Exception e){
+            System.out.println(e);
+        }
         
         int idService = Passerelle.getIdService(service);
         
-        Utilisateur unUser = new Utilisateur(login, service, idService, idUser);
+        Utilisateur unUser = new Utilisateur(login, service, idService, idUser, hash);
         
-        Passerelle.modifUser(unUser, passe);
+        Passerelle.modifUser(unUser);
     }//GEN-LAST:event_btnModifierMouseClicked
 
     /**
