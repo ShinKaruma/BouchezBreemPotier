@@ -170,7 +170,7 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             Object val = lstUser.getModel().getElementAt(choix);
             Utilisateur unUser = (Utilisateur) val;
 
-            Passerelle.delUnUser(unUser.getIdUser());
+            passerelleUser.delete(unUser);
 
             DefaultListModel listModel = new DefaultListModel();
             for (Utilisateur u : passerelleUser.findAll()) {

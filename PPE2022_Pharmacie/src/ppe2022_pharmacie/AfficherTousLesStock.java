@@ -7,11 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class AfficherTousLesStock extends javax.swing.JFrame {
-
+    
+    MedicamentDAO passerelleMedicament = new MedicamentDAO();
+    
     ArrayList<Medicament> unStock = new ArrayList<Medicament>();
     Scanner sc = new Scanner(System.in);
     private Utilisateur unUser;
-    //MedicamentDAO
 
     public AfficherTousLesStock(Utilisateur unUtilisateur) {
         
@@ -19,16 +20,15 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         unUser = unUtilisateur;
         initComponents();
-        DAO.Connection();
-        unStock = MedicamentDAO.donnerTousLesStocks();
+        passerelleMedicament.Connection();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Medicament pdt : MedicamentDAO.donnerTousLesStocks()) {
+        for (Medicament pdt : passerelleMedicament.findAll()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
 
-        ArrayList<String> ArrayCategorie = MedicamentDAO.donnerCategorie();
+        ArrayList<String> ArrayCategorie = passerelleMedicament.donnerCategorie();
         for (String c : ArrayCategorie) {
             cbxCategorie.addItem(c);
         }
@@ -397,10 +397,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
 
-        unStock = MedicamentDAO.donnerTousLesStocks();
+        unStock = passerelleMedicament.findAll();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Medicament pdt : MedicamentDAO.donnerTousLesStocks()) {
+        for (Medicament pdt : passerelleMedicament.findAll()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
@@ -477,7 +477,7 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         String Tous = "Tous";
         if (cbxCategorie.getSelectedItem() == Tous) {
             DefaultListModel listModel = new DefaultListModel();
-            for (Medicament pdt : MedicamentDAO.donnerTousLesStocks()) {
+            for (Medicament pdt : passerelleMedicament.findAll()) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);

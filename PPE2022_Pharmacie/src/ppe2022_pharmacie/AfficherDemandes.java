@@ -14,7 +14,8 @@ import javax.swing.JFrame;
  * @author sio2021
  */
 public class AfficherDemandes extends javax.swing.JFrame {
-    //DemandeDAO Passerelle=new DemandeDAO();
+    DemandeDAO passerelleDemande=new DemandeDAO();
+    MedicamentDAO passerelleMedicament = new MedicamentDAO();
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
     private Utilisateur unUser;
 
@@ -22,26 +23,26 @@ public class AfficherDemandes extends javax.swing.JFrame {
         this.unUser = unUser;
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        Passerelle.Connection();
+        passerelleDemande.Connection();
         initComponents();
 
         if (!pharmacien) {
             btnValider.setVisible(false);
             DefaultListModel listModel = new DefaultListModel();
-            for (Demande dmd : Passerelle.AfficherDemandeParService(unUser.getService().getIdService())) {
+            for (Demande dmd : passerelleDemande.AfficherDemandeParService(unUser.getService().getIdService())) {
                 listModel.addElement(dmd);
             }
         } else {
             btnCreerDemande.setVisible(false);
             btnDeconnexion.setVisible(false);
             DefaultListModel listModel = new DefaultListModel();
-            for (Demande dmd : Passerelle.AfficherDemande()) {
+            for (Demande dmd : passerelleDemande.findAll()) {
                 listModel.addElement(dmd);
             }
         }
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Demande dmd : Passerelle.AfficherDemande()) {
+        for (Demande dmd : passerelleDemande.findAll()) {
             listModel.addElement(dmd);
         }
         ListD.setModel(listModel);
@@ -175,12 +176,12 @@ public class AfficherDemandes extends javax.swing.JFrame {
         int choix = ListD.getSelectedIndex();
         Object val = ListD.getModel().getElementAt(choix);
         Demande uneDmd = (Demande) val;
-        int qtteM = Passerelle.avoirQtte(uneDmd.getMedicament().getId());
-        Passerelle.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getMedicament().getId());
-        Passerelle.SupprDemande(uneDmd.getIdD());
+        int qtteM = passerelleMedicament.avoirQtte(uneDmd.getMedicament().getId());
+        passerelleMedicament.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getMedicament().getId());
+        passerelleDemande.delete(uneDmd);
         //Actualisation
         DefaultListModel listModel = new DefaultListModel();
-        for (Demande dmd : Passerelle.AfficherDemande()) {
+        for (Demande dmd : passerelleDemande.findAll()) {
             listModel.addElement(dmd);
         }
         ListD.setModel(listModel);

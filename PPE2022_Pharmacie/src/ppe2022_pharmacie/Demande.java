@@ -5,6 +5,10 @@ package ppe2022_pharmacie;
  * @author sio2021
  */
 public class Demande {
+    
+    private final ServiceDAO passerelleService = new ServiceDAO();
+    
+    private final MedicamentDAO passerelleMedicament = new MedicamentDAO();
 
     @Override
     public String toString() {
@@ -19,8 +23,8 @@ public class Demande {
 
     public Demande(int idD, int idS, int idM, int qtte) {
         this.idD = idD;
-        this.service = Passerelle.getService(idS);
-        this.medicament = Passerelle.donnerUnStock(idM);
+        this.service = passerelleService.find(idS);
+        this.medicament = passerelleMedicament.find(idM);
         this.qtte = qtte;
     }
 

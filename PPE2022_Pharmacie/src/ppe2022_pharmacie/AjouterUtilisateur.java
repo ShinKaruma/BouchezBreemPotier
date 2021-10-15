@@ -29,7 +29,7 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         btnModifier.setVisible(false);
         lblId.setVisible(false);
         lblOutputID.setVisible(false);
-        Passerelle.Connection();
+        passerelleUser.Connection();
 
         for (Service s : passerelleService.findAll()) {
             cbxService.addItem(s.getLibelle());
@@ -44,7 +44,7 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         initComponents();
         btnValider.setVisible(false);
         lblOutputID.setText(String.valueOf(unUser.getIdUser()));
-        Passerelle.Connection();
+        passerelleUser.Connection();
         txtLogin.setText(unUser.getLogin());
 
         for (Service s : passerelleService.findAll()) {

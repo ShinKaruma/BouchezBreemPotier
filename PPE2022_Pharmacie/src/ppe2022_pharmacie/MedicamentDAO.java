@@ -18,7 +18,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         int qtte = unMedicament.getQtteStock();
         int seuil = unMedicament.getSeuil();
         String categorie = unMedicament.getCategorie();
-        String requete = "Insert Into utilisateur values (?,?,?,?,?)";
+        String requete = "Insert Into medicament values (?,?,?,?,?)";
 
         try {
             PreparedStatement prepare = pdo.prepareStatement(requete);
@@ -42,7 +42,7 @@ public class MedicamentDAO extends DAO<Medicament>{
             Connection();
         }
         Medicament unMedicament = null;
-        String requete = "Select libelle,qtte,seuil,categorie From stock Where id=?";
+        String requete = "Select libelle,qtte,seuil,categorie From medicament Where id=?";
         try {
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, pId);
@@ -113,18 +113,13 @@ public class MedicamentDAO extends DAO<Medicament>{
     //FindALL
     @Override
     public ArrayList<Medicament> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    //Méthodes
-    public static ArrayList<Medicament> donnerTousLesStocks() {
         if (pdo == null) {
             DAO.Connection();
         }
         ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock";
+            String requete = "select * from medicament";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
@@ -145,36 +140,6 @@ public class MedicamentDAO extends DAO<Medicament>{
         return lesStocks;
     }
     
-    public static Medicament donnerUnStock(int idM) {
-        if (pdo == null) {
-            DAO.Connection();
-        }
-        Medicament unMedic = null;
-        try {
-            Statement state = pdo.createStatement();
-            String requete = "select * from stock where idm=?";
-            PreparedStatement prepare = pdo.prepareStatement(requete);
-            prepare.setInt(1, idM);
-
-            ResultSet res = prepare.executeQuery();
-            if (res.next()) {
-                int id = res.getInt(1);
-                String libelle = res.getString(2);
-                int qtteStock = res.getInt(3);
-                int seuil = res.getInt(4);
-                String categorie = res.getString(5);
-                unMedic = new Medicament(id, libelle, qtteStock, seuil, categorie);
-            }
-
-            state.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Erreur donner tous les stocks");
-        }
-        return unMedic;
-    }
-    
     public static ArrayList<Medicament> donnerStockSeuil() {
         if (pdo == null) {
             DAO.Connection();
@@ -182,7 +147,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock where qtte <= seuil";
+            String requete = "select * from medicament where qtte <= seuil";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
@@ -210,7 +175,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList ArrayCategorie = new ArrayList();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select distinct categorie from stock";
+            String requete = "select distinct categorie from medicament";
             ResultSet stockResultat = state.executeQuery(requete);
             String Tous = "Tous";
             ArrayCategorie.add(Tous);
@@ -236,7 +201,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock where categorie = \'" + pCategorie + "\'";
+            String requete = "select * from medicament where categorie = \'" + pCategorie + "\'";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
@@ -264,7 +229,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesMedicaments = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock ";
+            String requete = "select * from medicament ";
             ResultSet medicResultat = state.executeQuery(requete);
             while (medicResultat.next()) {
                 int id = medicResultat.getInt(1);
@@ -283,5 +248,42 @@ public class MedicamentDAO extends DAO<Medicament>{
             System.out.println("Erreur donner tous les stocks");
         }
         return lesMedicaments;
+    }
+    
+    public static int avoirQtte(int idM) {
+        int qtteD = 0;
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "SELECT qtte FROM medicament WHERE idm=" + idM;
+            ResultSet qtteResultat = state.executeQuery(requete);
+
+            if (qtteResultat.next()) {
+                qtteD = qtteResultat.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+        return qtteD;
+    }
+    
+    public static void validerQtte(int qtteD, int qtteM, int idM) {
+        int qtteF = qtteM - qtteD;
+        if (pdo == null) {
+            Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "UPDATE medicament SET qtte=" + qtteF + " WHERE idm=" + idM;
+            int r = state.executeUpdate(requete);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+
     }
 }

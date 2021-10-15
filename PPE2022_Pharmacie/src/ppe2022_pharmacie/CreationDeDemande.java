@@ -22,12 +22,15 @@ public class CreationDeDemande extends javax.swing.JFrame {
     
     private int idService;
     
+    MedicamentDAO passerelleMedicament = new MedicamentDAO();
+    DemandeDAO passerelleDemande=new DemandeDAO();
+    
     public CreationDeDemande(Utilisateur unUser) {
         idService = unUser.getService().getIdService();
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        ArrayList<Medicament> ArrayMedic = Passerelle.donnerTousLesStocks();
+        ArrayList<Medicament> ArrayMedic = passerelleMedicament.findAll();
         for (Medicament c: ArrayMedic) {
             cbxMedicament.addItem(c.getLibelle());
         }
@@ -180,7 +183,9 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
         int qtte = Integer.parseInt(Sqtte);
         
-        Passerelle.CreaDemande(idServ, idMed, qtte);
+        Demande uneDemande = new Demande(1, idServ, idMed, qtte);
+        
+        passerelleDemande.create(uneDemande);
         JOptionPane.showMessageDialog(null, "Demande créée");
     }//GEN-LAST:event_btnVActionPerformed
 
@@ -200,7 +205,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
         String Tous = "Tous";
         if (cbxMedicament.getSelectedItem() == Tous) {
             DefaultListModel listModel = new DefaultListModel();
-            for (Medicament pdt : Passerelle.donnerTousLesStocks()) {
+            for (Medicament pdt : passerelleMedicament.findAll()) {
                 listModel.addElement(pdt);
             }
         }

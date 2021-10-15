@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import static ppe2022_pharmacie.Passerelle.Connection;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -115,6 +114,33 @@ public class DemandeDAO extends DAO<Demande>{
         try {
             Statement state = pdo.createStatement();
             String requete = "SELECT * FROM demande";
+            ResultSet demandeResultat = state.executeQuery(requete);
+
+            while (demandeResultat.next()) {
+                int idD = demandeResultat.getInt(1);
+                int idS = demandeResultat.getInt(2);
+                int idM = demandeResultat.getInt(3);
+                int qtte = demandeResultat.getInt(4);
+                Demande uneDemande = new Demande(idD, idS, idM, qtte);
+                lesDemandes.add(uneDemande);
+            }
+            demandeResultat.close();
+            state.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Aucune Demande ou id");
+        }
+        return lesDemandes;
+    }
+    
+    public ArrayList<Demande> AfficherDemandeParService(int idService) {
+        if (pdo == null) {
+            Connection();
+        }
+        ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "SELECT * FROM demande where idservice="+idService;
             ResultSet demandeResultat = state.executeQuery(requete);
 
             while (demandeResultat.next()) {
