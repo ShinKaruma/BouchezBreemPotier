@@ -42,7 +42,7 @@ public class MedicamentDAO extends DAO<Medicament>{
             Connection();
         }
         Medicament unMedicament = null;
-        String requete = "Select libelle,qtte,seuil,categorie From stock Where id=?";
+        String requete = "Select libelle,qtte,seuil,categorie From medicament Where id=?";
         try {
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, pId);
@@ -124,7 +124,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock";
+            String requete = "select * from medicament";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
@@ -152,7 +152,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         Medicament unMedic = null;
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock where idm=?";
+            String requete = "select * from medicament where idm=?";
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, idM);
 
@@ -182,7 +182,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock where qtte <= seuil";
+            String requete = "select * from medicament where qtte <= seuil";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
@@ -210,7 +210,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList ArrayCategorie = new ArrayList();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select distinct categorie from stock";
+            String requete = "select distinct categorie from medicament";
             ResultSet stockResultat = state.executeQuery(requete);
             String Tous = "Tous";
             ArrayCategorie.add(Tous);
@@ -236,7 +236,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesStocks = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock where categorie = \'" + pCategorie + "\'";
+            String requete = "select * from medicament where categorie = \'" + pCategorie + "\'";
             ResultSet stockResultat = state.executeQuery(requete);
             while (stockResultat.next()) {
                 int id = stockResultat.getInt(1);
@@ -264,7 +264,7 @@ public class MedicamentDAO extends DAO<Medicament>{
         ArrayList<Medicament> lesMedicaments = new ArrayList<Medicament>();
         try {
             Statement state = pdo.createStatement();
-            String requete = "select * from stock ";
+            String requete = "select * from medicament ";
             ResultSet medicResultat = state.executeQuery(requete);
             while (medicResultat.next()) {
                 int id = medicResultat.getInt(1);
