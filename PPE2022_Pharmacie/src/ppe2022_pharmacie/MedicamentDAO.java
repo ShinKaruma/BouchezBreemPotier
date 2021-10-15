@@ -140,6 +140,37 @@ public class MedicamentDAO extends DAO<Medicament>{
         return lesStocks;
     }
     
+
+    public static Medicament donnerUnStock(int idM) {
+        if (pdo == null) {
+            DAO.Connection();
+        }
+        Medicament unMedic = null;
+        try {
+            Statement state = pdo.createStatement();
+            String requete = "select * from medicament where idm=?";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            prepare.setInt(1, idM);
+
+            ResultSet res = prepare.executeQuery();
+            if (res.next()) {
+                int id = res.getInt(1);
+                String libelle = res.getString(2);
+                int qtteStock = res.getInt(3);
+                int seuil = res.getInt(4);
+                String categorie = res.getString(5);
+                unMedic = new Medicament(id, libelle, qtteStock, seuil, categorie);
+            }
+
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur donner tous les stocks");
+        }
+        return unMedic;
+    }
+    
     public static ArrayList<Medicament> donnerStockSeuil() {
         if (pdo == null) {
             DAO.Connection();
