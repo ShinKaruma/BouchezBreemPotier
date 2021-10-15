@@ -6,6 +6,8 @@
 package ppe2022_pharmacie;
 
 import java.util.ArrayList;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,26 +21,26 @@ public class CreationDeDemande extends javax.swing.JFrame {
     /**
      * Creates new form CreationDeDemande
      */
-    
     private int idService;
-    
+
     MedicamentDAO passerelleMedicament = new MedicamentDAO();
-    DemandeDAO passerelleDemande=new DemandeDAO();
-    
+    DemandeDAO passerelleDemande = new DemandeDAO();
+
     public CreationDeDemande(Utilisateur unUser) {
         idService = unUser.getService().getIdService();
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        ArrayList<Medicament> ArrayMedic = passerelleMedicament.findAll();
-        for (Medicament c: ArrayMedic) {
-            cbxMedicament.addItem(c.getLibelle());
-        }
+        DefaultComboBoxModel<Medicament> lisModel = new DefaultComboBoxModel<>();
         
+        for (Medicament pdt : passerelleMedicament.findAll()) {
+            lisModel.addElement(pdt);
+        }
+        cbxMedicament.setModel(lisModel);
+
         lblService.setText(unUser.getService().getLibelle());
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,7 +99,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
             }
         });
 
-        cbxMedicament.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxMedicament.setModel(new javax.swing.DefaultComboBoxModel<>());
         cbxMedicament.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxMedicamentActionPerformed(evt);
@@ -175,16 +177,13 @@ public class CreationDeDemande extends javax.swing.JFrame {
         String SidMed = txtQtte.getText();
         String Sqtte = txtQtte.getText();
 
-
         int idServ = idService;
         int idMed = Integer.parseInt(SidMed);
 
-
-
         int qtte = Integer.parseInt(Sqtte);
-        
+
         Demande uneDemande = new Demande(1, idServ, idMed, qtte);
-        
+
         passerelleDemande.create(uneDemande);
         JOptionPane.showMessageDialog(null, "Demande créée");
     }//GEN-LAST:event_btnVActionPerformed
@@ -202,13 +201,12 @@ public class CreationDeDemande extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxMedicamentActionPerformed
 
     private void btnVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVMouseClicked
-        String Tous = "Tous";
-        if (cbxMedicament.getSelectedItem() == Tous) {
-            DefaultListModel listModel = new DefaultListModel();
-            for (Medicament pdt : passerelleMedicament.findAll()) {
-                listModel.addElement(pdt);
-            }
+
+        DefaultListModel listModel = new DefaultListModel();
+        for (Medicament pdt : passerelleMedicament.findAll()) {
+            listModel.addElement(pdt);
         }
+
     }//GEN-LAST:event_btnVMouseClicked
 
     private void txtQtteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtteActionPerformed
@@ -218,7 +216,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private void txtMedicamentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMedicamentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMedicamentActionPerformed
-
 
     /**
      * @param args the command line arguments
@@ -263,7 +260,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
     private javax.swing.JTextField TFD;
     private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnV;
-    private javax.swing.JComboBox<String> cbxMedicament;
+    private javax.swing.JComboBox<Medicament> cbxMedicament;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
