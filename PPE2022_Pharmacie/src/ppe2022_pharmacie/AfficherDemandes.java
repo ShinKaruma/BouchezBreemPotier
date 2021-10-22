@@ -15,6 +15,8 @@ import javax.swing.JFrame;
  */
 public class AfficherDemandes extends javax.swing.JFrame {
 
+    DemandeDAO passerelleDemande = new DemandeDAO();
+    MedicamentDAO passerelleMedicament = new MedicamentDAO();
     ArrayList<Demande> uneDemande = new ArrayList<Demande>();
     private Utilisateur unUser;
 
@@ -22,29 +24,27 @@ public class AfficherDemandes extends javax.swing.JFrame {
         this.unUser = unUser;
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        Passerelle.Connection();
+        
+        passerelleDemande.Connection();
         initComponents();
-
+        DefaultListModel listModel = new DefaultListModel();
+        
         if (!pharmacien) {
             btnValider.setVisible(false);
-            DefaultListModel listModel = new DefaultListModel();
-            for (Demande dmd : Passerelle.AfficherDemandeParService(unUser.getService().getIdService())) {
+
+            for (Demande dmd : passerelleDemande.AfficherDemandeParService(unUser.getService().getIdService())) {
                 listModel.addElement(dmd);
             }
         } else {
             btnCreerDemande.setVisible(false);
             btnDeconnexion.setVisible(false);
-            DefaultListModel listModel = new DefaultListModel();
-            for (Demande dmd : Passerelle.AfficherDemande()) {
+            
+            for (Demande dmd : passerelleDemande.findAll()) {
                 listModel.addElement(dmd);
             }
         }
 
-        DefaultListModel listModel = new DefaultListModel();
-        for (Demande dmd : Passerelle.AfficherDemande()) {
-            listModel.addElement(dmd);
-        }
-        ListD.setModel(listModel);
+        lstDemandes.setModel(listModel);
     }
 
     /**
@@ -57,26 +57,27 @@ public class AfficherDemandes extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        ListD = new javax.swing.JList<>();
+        lstDemandes = new javax.swing.JList<>();
         btnValider = new javax.swing.JButton();
         btnFermer = new javax.swing.JButton();
         btnCreerDemande = new javax.swing.JButton();
         btnDeconnexion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnModifier = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        ListD.setModel(new javax.swing.AbstractListModel<String>() {
+        lstDemandes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        ListD.addMouseListener(new java.awt.event.MouseAdapter() {
+        lstDemandes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ListDMouseClicked(evt);
+                lstDemandesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(ListD);
+        jScrollPane1.setViewportView(lstDemandes);
 
         btnValider.setText("Valider");
         btnValider.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,6 +114,18 @@ public class AfficherDemandes extends javax.swing.JFrame {
 
         jLabel1.setText("LISTE DES DEMANDES:");
 
+        btnModifier.setText("Modifier");
+        btnModifier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModifierMouseClicked(evt);
+            }
+        });
+        btnModifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifierActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,16 +142,21 @@ public class AfficherDemandes extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 54, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(241, 241, 241))
             .addGroup(layout.createSequentialGroup()
                 .addGap(260, 260, 260)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnValider)
-                    .addComponent(btnCreerDemande))
+                .addComponent(btnValider)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(241, 241, 241))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnModifier)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCreerDemande)
+                        .addGap(227, 227, 227))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +166,9 @@ public class AfficherDemandes extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(btnCreerDemande)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreerDemande)
+                    .addComponent(btnModifier))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnValider)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
@@ -165,25 +185,25 @@ public class AfficherDemandes extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnFermerMouseClicked
 
-    private void ListDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListDMouseClicked
+    private void lstDemandesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDemandesMouseClicked
 
 
-    }//GEN-LAST:event_ListDMouseClicked
+    }//GEN-LAST:event_lstDemandesMouseClicked
 
     private void btnValiderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValiderMouseClicked
 
-        int choix = ListD.getSelectedIndex();
-        Object val = ListD.getModel().getElementAt(choix);
+        int choix = lstDemandes.getSelectedIndex();
+        Object val = lstDemandes.getModel().getElementAt(choix);
         Demande uneDmd = (Demande) val;
-        int qtteM = Passerelle.avoirQtte(uneDmd.getMedicament().getId());
-        Passerelle.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getMedicament().getId());
-        Passerelle.SupprDemande(uneDmd.getIdD());
+        int qtteM = passerelleMedicament.avoirQtte(uneDmd.getMedicament().getId());
+        passerelleMedicament.validerQtte(uneDmd.getQtte(), qtteM, uneDmd.getMedicament().getId());
+        passerelleDemande.delete(uneDmd);
         //Actualisation
         DefaultListModel listModel = new DefaultListModel();
-        for (Demande dmd : Passerelle.AfficherDemande()) {
+        for (Demande dmd : passerelleDemande.findAll()) {
             listModel.addElement(dmd);
         }
-        ListD.setModel(listModel);
+        lstDemandes.setModel(listModel);
     }//GEN-LAST:event_btnValiderMouseClicked
 
     private void btnCreerDemandeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerDemandeActionPerformed
@@ -198,6 +218,19 @@ public class AfficherDemandes extends javax.swing.JFrame {
         new Authentification().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnDeconnexionMouseClicked
+
+    private void btnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModifierActionPerformed
+
+    private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
+        int choix = lstDemandes.getSelectedIndex();
+        Object val = lstDemandes.getModel().getElementAt(choix);
+        
+        Demande laDemande = (Demande) val;
+        
+        new CreationDeDemande(unUser, laDemande).setVisible(true);
+    }//GEN-LAST:event_btnModifierMouseClicked
 
     /**
      * @param args the command line arguments
@@ -238,12 +271,13 @@ public class AfficherDemandes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> ListD;
     private javax.swing.JButton btnCreerDemande;
     private javax.swing.JButton btnDeconnexion;
     private javax.swing.JButton btnFermer;
+    private javax.swing.JButton btnModifier;
     private javax.swing.JButton btnValider;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> lstDemandes;
     // End of variables declaration//GEN-END:variables
 }

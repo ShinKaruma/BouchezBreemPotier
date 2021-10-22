@@ -5,7 +5,9 @@
  */
 package ppe2022_pharmacie;
 
+import java.security.MessageDigest;
 import javax.swing.JFrame;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -13,39 +15,42 @@ import javax.swing.JFrame;
  */
 public class AjouterUtilisateur extends javax.swing.JFrame {
 
+    private static final UtilisateurDAO passerelleUser = new UtilisateurDAO();
+    private static final ServiceDAO passerelleService = new ServiceDAO();
+
     /**
      * Creates new form AjouterUtilisateur
      */
     public AjouterUtilisateur() {
-        
+
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         btnModifier.setVisible(false);
         lblId.setVisible(false);
         lblOutputID.setVisible(false);
-        Passerelle.Connection();
-        
-        for (Service s : Passerelle.getTousLesServices()) {
+        passerelleUser.Connection();
+
+        for (Service s : passerelleService.findAll()) {
             cbxService.addItem(s.getLibelle());
         }
     }
-    
+
     public AjouterUtilisateur(Utilisateur unUser) {
-        
+
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
         initComponents();
         btnValider.setVisible(false);
         lblOutputID.setText(String.valueOf(unUser.getIdUser()));
-        Passerelle.Connection();
+        passerelleUser.Connection();
         txtLogin.setText(unUser.getLogin());
-        
-        for (Service s : Passerelle.getTousLesServices()) {
+
+        for (Service s : passerelleService.findAll()) {
             cbxService.addItem(s.getLibelle());
         }
-        
+
         cbxService.setSelectedItem(unUser.getService());
     }
 
@@ -190,13 +195,25 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         for (char unChar : passeChar) {
             passe += unChar;
         }
+        String hash = "";
+        try{
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte raw[] = md.digest(passe.getBytes("UTF-8"));
+        hash = DatatypeConverter.printHexBinary(raw);
+        System.out.println(hash);
+        
         String service = (String) cbxService.getSelectedItem();
+        int idService = passerelleService.getIdService(service);
+
+        Utilisateur unUser = new Utilisateur(login, new Service(idService,service), 2, hash);
+        
+        passerelleUser.create(unUser);
+        
+        }catch(Exception e){
+            System.out.println(e);
+        }
         
         
-        
-        int idService = Passerelle.getIdService(service);
-        
-        Passerelle.ajouterUtilisateur(login, passe, idService);
     }//GEN-LAST:event_btnValiderMouseClicked
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
@@ -208,14 +225,21 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         }
         int idUser = Integer.parseInt(lblOutputID.getText());
         String service = (String) cbxService.getSelectedItem();
+        String hash = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte raw[] = md.digest(passe.getBytes("UTF-8"));
+            hash = DatatypeConverter.printHexBinary(raw);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        int idService = passerelleService.getIdService(service);
+
+        Utilisateur unUser = new Utilisateur(login, new Service(idService,service), idUser, hash);
         
-        
-        
-        int idService = Passerelle.getIdService(service);
-        
-        Utilisateur unUser = new Utilisateur(login, service, idService, idUser);
-        
-        Passerelle.modifUser(unUser, passe);
+        System.out.println("modifié");
+        passerelleUser.update(unUser);
     }//GEN-LAST:event_btnModifierMouseClicked
 
     /**

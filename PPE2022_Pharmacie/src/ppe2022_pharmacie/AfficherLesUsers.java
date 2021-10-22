@@ -14,6 +14,7 @@ import javax.swing.JFrame;
  */
 public class AfficherLesUsers extends javax.swing.JFrame {
 
+    private static final UtilisateurDAO passerelleUser = new UtilisateurDAO();
     /**
      * Creates new form AfficherLesUsers
      */
@@ -22,10 +23,10 @@ public class AfficherLesUsers extends javax.swing.JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        Passerelle.Connection();
+        passerelleUser.Connection();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Utilisateur u : Passerelle.getTousLesUser()) {
+        for (Utilisateur u : passerelleUser.findAll()) {
             listModel.addElement(u);
         }
         lstUser.setModel(listModel);
@@ -169,10 +170,10 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             Object val = lstUser.getModel().getElementAt(choix);
             Utilisateur unUser = (Utilisateur) val;
 
-            Passerelle.delUnUser(unUser.getIdUser());
+            passerelleUser.delete(unUser);
 
             DefaultListModel listModel = new DefaultListModel();
-            for (Utilisateur u : Passerelle.getTousLesUser()) {
+            for (Utilisateur u : passerelleUser.findAll()) {
                 listModel.addElement(u);
             }
             lstUser.setModel(listModel);
@@ -196,7 +197,7 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             new AjouterUtilisateur(unUser).setVisible(true);
 
             DefaultListModel listModel = new DefaultListModel();
-            for (Utilisateur u : Passerelle.getTousLesUser()) {
+            for (Utilisateur u : passerelleUser.findAll()) {
                 listModel.addElement(u);
             }
             lstUser.setModel(listModel);
@@ -211,7 +212,7 @@ public class AfficherLesUsers extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
         DefaultListModel listModel = new DefaultListModel();
-        for (Utilisateur u : Passerelle.getTousLesUser()) {
+        for (Utilisateur u : passerelleUser.findAll()) {
             listModel.addElement(u);
         }
         lstUser.setModel(listModel);

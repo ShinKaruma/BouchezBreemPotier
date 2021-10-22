@@ -19,12 +19,12 @@ import javax.swing.JFrame;
  * @author hbana
  */
 public class Authentification extends javax.swing.JFrame {
-
+    private static final UtilisateurDAO passerelleUser = new UtilisateurDAO();
+    private static final ServiceDAO passerelleService = new ServiceDAO();
     /**
      * Creates new form Authentification
      */
     public Authentification() {
-        Passerelle.Connection();
         initComponents();
         this.setTitle("Se connecter");
         this.setResizable(false);
@@ -124,11 +124,14 @@ public class Authentification extends javax.swing.JFrame {
             byte raw[] = md.digest(passe.getBytes("UTF-8"));
             String hash;
             hash = DatatypeConverter.printHexBinary(raw);
-
-            int[] info = Passerelle.Authentification(login, hash);
-            Service service = Passerelle.getService(info[1]);
             
-            Utilisateur unUtilisateur = new Utilisateur(login, service.getLibelle(), info[1], info[2]);
+            int[] info = passerelleUser.Authentification(login, hash);
+            Service service = passerelleService.find(info[1]);
+            System.out.println(info[0]);
+            System.out.println(info[1]);
+            System.out.println(info[2]);
+            Utilisateur unUtilisateur = new Utilisateur(login, service, info[2], hash);
+            
             
             if (info[0] == 0) {
                 lblOutput.setText("Erreur dans le couple Login/mdp");
@@ -146,6 +149,7 @@ public class Authentification extends javax.swing.JFrame {
                         this.dispose();
                         break;
                     default:
+                        System.out.println(unUtilisateur.getService().getLibelle());
                         new AfficherDemandes(false, unUtilisateur).setVisible(true);
                         this.dispose();
                         break;

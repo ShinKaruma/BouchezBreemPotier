@@ -7,8 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class AfficherTousLesStock extends javax.swing.JFrame {
-
-    ArrayList<Stock> unStock = new ArrayList<Stock>();
+    
+    MedicamentDAO passerelleMedicament = new MedicamentDAO();
+    
+    ArrayList<Medicament> unStock = new ArrayList<Medicament>();
     Scanner sc = new Scanner(System.in);
     private Utilisateur unUser;
 
@@ -18,16 +20,15 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         unUser = unUtilisateur;
         initComponents();
-        Passerelle.Connection();
-        unStock = Passerelle.donnerTousLesStocks();
+        passerelleMedicament.Connection();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+        for (Medicament pdt : passerelleMedicament.findAll()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
 
-        ArrayList<String> ArrayCategorie = Passerelle.donnerCategorie();
+        ArrayList<String> ArrayCategorie = passerelleMedicament.donnerCategorie();
         for (String c : ArrayCategorie) {
             cbxCategorie.addItem(c);
         }
@@ -66,6 +67,8 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         btnDemandes = new javax.swing.JButton();
         lblUser1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -304,47 +307,76 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 51, 51));
+        jButton4.setText("Ajouter Médicament");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Cliquer sur  \"Lister par catégorie\" pour actualiser la liste selon la catégorie.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnActualiser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxCategorie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(71, 71, 71))
+                        .addGap(220, 220, 220)
+                        .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCategorie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(39, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDemandes)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnActualiser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnSeuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(132, 132, 132))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(130, 130, 130))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(88, 88, 88)))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 3, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(lblAfficherTous))
-                    .addComponent(lblTitre))
-                .addGap(316, 316, 316))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(108, 108, 108))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblTitre)
+                        .addGap(316, 316, 316))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblAfficherTous)
+                .addGap(403, 403, 403))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,24 +386,30 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAfficherTous)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnActualiser)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSeuil, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblUser))
+                        .addComponent(btnActualiser)
+                        .addGap(19, 19, 19)
+                        .addComponent(btnSeuil, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDemandes)))
-                .addGap(16, 16, 16)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addComponent(btnDemandes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -396,19 +434,21 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
 
     private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
 
-        unStock = Passerelle.donnerTousLesStocks();
+        unStock = passerelleMedicament.findAll();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+        for (Medicament pdt : passerelleMedicament.findAll()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
+        String tous = "Tous";
+        cbxCategorie.setSelectedItem(tous);
     }//GEN-LAST:event_btnActualiserMouseClicked
 
     private void lstAfficherTousMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstAfficherTousMouseClicked
         int choix = lstAfficherTous.getSelectedIndex();
         Object val = lstAfficherTous.getModel().getElementAt(choix);
-        Stock unPdt = (Stock) val;
+        Medicament unPdt = (Medicament) val;
         
         PasserCommande g= new PasserCommande(unPdt);g.setVisible(true);
     }//GEN-LAST:event_lstAfficherTousMouseClicked
@@ -450,13 +490,15 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualiser3ActionPerformed
 
     private void btnSeuilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeuilMouseClicked
-        unStock = Passerelle.donnerStockSeuil();
+        unStock = MedicamentDAO.donnerStockSeuil();
 
         DefaultListModel listModel = new DefaultListModel();
-        for (Stock pdt : Passerelle.donnerStockSeuil()) {
+        for (Medicament pdt : MedicamentDAO.donnerStockSeuil()) {
             listModel.addElement(pdt);
         }
         lstAfficherTous.setModel(listModel);
+        String tous = "Tous";
+        cbxCategorie.setSelectedItem(tous);
     }//GEN-LAST:event_btnSeuilMouseClicked
 
     private void btnSeuilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeuilActionPerformed
@@ -476,13 +518,13 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
         String Tous = "Tous";
         if (cbxCategorie.getSelectedItem() == Tous) {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : Passerelle.donnerTousLesStocks()) {
+            for (Medicament pdt : passerelleMedicament.findAll()) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);
         } else {
             DefaultListModel listModel = new DefaultListModel();
-            for (Stock pdt : Passerelle.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
+            for (Medicament pdt : MedicamentDAO.AfficheEnFonctionCategorie(cbxCategorie.getSelectedItem().toString())) {
                 listModel.addElement(pdt);
             }
             lstAfficherTous.setModel(listModel);
@@ -501,6 +543,8 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeconnexionActionPerformed
 
     private void btnDemandesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDemandesMouseClicked
+        String tous = "Tous";
+        cbxCategorie.setSelectedItem(tous);
         new AfficherDemandes(true, unUser).setVisible(true);
     }//GEN-LAST:event_btnDemandesMouseClicked
 
@@ -509,8 +553,16 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDemandesActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        String tous = "Tous";
+        cbxCategorie.setSelectedItem(tous);
         new AfficherCommande().setVisible(true);
     }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        String tous = "Tous";
+        cbxCategorie.setSelectedItem(tous);
+        new AjouterMedicament().setVisible(true);
+    }//GEN-LAST:event_jButton4MouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -555,8 +607,10 @@ public class AfficherTousLesStock extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
