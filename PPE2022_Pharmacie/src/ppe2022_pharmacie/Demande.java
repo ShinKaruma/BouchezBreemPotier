@@ -9,31 +9,25 @@ public class Demande {
     private final ServiceDAO passerelleService = new ServiceDAO();
     
     private final MedicamentDAO passerelleMedicament = new MedicamentDAO();
-
-    @Override
-    public String toString() {
-        return "Demande{" + "idD=" + idD + ", service = " + service.getLibelle() + ", medicament= " + medicament.getLibelle() + ", qtte=" + qtte + '}';
-
-    }
     
-    private int idD;
+    private int idDemande;
     private Service service;
     private Medicament medicament;
     private int qtte;
 
     public Demande(int idD, int idS, int idM, int qtte) {
-        this.idD = idD;
+        this.idDemande = idD;
         this.service = passerelleService.find(idS);
         this.medicament = passerelleMedicament.find(idM);
         this.qtte = qtte;
     }
 
     public int getIdD() {
-        return idD;
+        return idDemande;
     }
 
     public void setIdD(int idD) {
-        this.idD = idD;
+        this.idDemande = idD;
     }
 
     public Service getService() {
@@ -58,5 +52,11 @@ public class Demande {
 
     public void setQtte(int qtte) {
         this.qtte = qtte;
+    }
+    
+    @Override
+    public String toString() {
+        return "Demande{" + "idD=" + idDemande + ", service = " + service.getLibelle() + ", medicament= " + medicament.getLibelle() + ", qtte=" + qtte + '}';
+
     }
 }

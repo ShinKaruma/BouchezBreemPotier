@@ -40,14 +40,29 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
         lblService.setText(unUser.getService().getLibelle());
     }
+    
+    public CreationDeDemande(Utilisateur unUser, Demande uneDemande) {
+        idService = unUser.getService().getIdService();
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        initComponents();
+        DefaultComboBoxModel<Medicament> lisModel = new DefaultComboBoxModel<>();
+        
+        for (Medicament pdt : passerelleMedicament.findAll()) {
+            lisModel.addElement(pdt);
+        }
+        cbxMedicament.setModel(lisModel);
+        
+        cbxMedicament.setSelectedItem(uneDemande.getMedicament());
+
+        lblService.setText(uneDemande.getService().getLibelle());
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        TFD = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         btnV = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtQtte = new javax.swing.JTextField();
@@ -60,14 +75,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Création d'une Demande");
-
-        TFD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFDActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Entrer l'id de la Demande:");
 
         btnV.setText("Valider");
         btnV.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,17 +125,15 @@ public class CreationDeDemande extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TFD)
                             .addComponent(txtQtte, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                             .addComponent(cbxMedicament, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(756, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAnnuler)
@@ -143,10 +148,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TFD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lblService))
                 .addGap(18, 18, 18)
@@ -157,7 +158,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtQtte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnV)
                     .addComponent(btnAnnuler))
@@ -167,10 +168,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void TFDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TFDActionPerformed
 
     private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
         // TODO add your handling code here:
@@ -257,12 +254,10 @@ public class CreationDeDemande extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TFD;
     private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnV;
     private javax.swing.JComboBox<Medicament> cbxMedicament;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
