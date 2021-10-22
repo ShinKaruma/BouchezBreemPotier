@@ -315,6 +315,24 @@ public class MedicamentDAO extends DAO<Medicament>{
             System.out.println(e);
             System.out.println("Aucune Demande ou id");
         }
-
+    }
+    
+    public static int derniereid(){
+        int id = 0;
+        if (pdo == null) {
+            DAO.Connection();
+        }
+        try {
+            Statement state = pdo.createStatement();
+            String requete1 = "select max(idm) from medicament";
+            ResultSet stockResultat = state.executeQuery(requete1);
+            while (stockResultat.next()) {
+                id = stockResultat.getInt(1) + 1;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Erreur dans l'ajout de la commande");
+        }
+        return id;
     }
 }
