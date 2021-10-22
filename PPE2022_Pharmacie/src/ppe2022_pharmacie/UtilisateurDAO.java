@@ -23,6 +23,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setString(1, unObjet.getLogin());
             prepare.setString(2, unObjet.getHash());
+            System.out.println(unObjet.getHash());
             prepare.setInt(3, unObjet.getService().getIdService());
             prepare.executeUpdate();
             estFonctionnel = true;
@@ -90,7 +91,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                 int idUser = userResultat.getInt(4);
                 String passe = userResultat.getString(5);
 
-                lesUsers.add(new Utilisateur(login, service, idService, idUser, passe));
+                lesUsers.add(new Utilisateur(login, new Service(idService, service), idUser, passe));
             }
         } catch (Exception e) {
             System.out.println(e);

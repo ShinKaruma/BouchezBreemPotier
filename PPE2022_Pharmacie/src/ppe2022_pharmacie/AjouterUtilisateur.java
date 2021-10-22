@@ -201,16 +201,19 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         byte raw[] = md.digest(passe.getBytes("UTF-8"));
         hash = DatatypeConverter.printHexBinary(raw);
         System.out.println(hash);
-        }catch(Exception e){
-            System.out.println(e);
-        }
         
         String service = (String) cbxService.getSelectedItem();
         int idService = passerelleService.getIdService(service);
 
-        Utilisateur unUser = new Utilisateur(login, service, idService, 2, hash);
+        Utilisateur unUser = new Utilisateur(login, new Service(idService,service), 2, hash);
         
         passerelleUser.create(unUser);
+        
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        
     }//GEN-LAST:event_btnValiderMouseClicked
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
@@ -233,8 +236,9 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
 
         int idService = passerelleService.getIdService(service);
 
-        Utilisateur unUser = new Utilisateur(login, service, idService, idUser, hash);
-
+        Utilisateur unUser = new Utilisateur(login, new Service(idService,service), idUser, hash);
+        
+        System.out.println("modifié");
         passerelleUser.update(unUser);
     }//GEN-LAST:event_btnModifierMouseClicked
 

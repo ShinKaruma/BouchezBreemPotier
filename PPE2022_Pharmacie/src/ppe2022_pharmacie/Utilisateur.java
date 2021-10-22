@@ -14,10 +14,10 @@ public class Utilisateur {
     private String login;
     private Service unService;
 
-    public Utilisateur(String login, String service, int idService, int idUser, String Hash) {
-        this.hash = hash;
+    public Utilisateur(String login, Service unService, int idUser, String Hash) {
+        this.hash = Hash;
         this.login = login;
-        this.unService = new Service(idService, service);
+        this.unService = unService;
         this.idUser = idUser;
     }
 

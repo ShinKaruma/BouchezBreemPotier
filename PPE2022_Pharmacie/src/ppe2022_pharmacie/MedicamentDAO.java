@@ -42,7 +42,7 @@ public class MedicamentDAO extends DAO<Medicament>{
             Connection();
         }
         Medicament unMedicament = null;
-        String requete = "Select libelle,qtte,seuil,categorie From medicament Where id=?";
+        String requete = "Select libelle,qtte,seuil,categorie From medicament Where idm=?";
         try {
             PreparedStatement prepare = pdo.prepareStatement(requete);
             prepare.setInt(1, pId);

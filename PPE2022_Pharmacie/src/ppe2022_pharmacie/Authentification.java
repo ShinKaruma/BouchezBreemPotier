@@ -126,9 +126,11 @@ public class Authentification extends javax.swing.JFrame {
             hash = DatatypeConverter.printHexBinary(raw);
             
             int[] info = passerelleUser.Authentification(login, hash);
-            Service service = passerelleService.find(info[0]);
-            
-            Utilisateur unUtilisateur = new Utilisateur(login, service.getLibelle(), info[0], info[1], hash);
+            Service service = passerelleService.find(info[1]);
+            System.out.println(info[0]);
+            System.out.println(info[1]);
+            System.out.println(info[2]);
+            Utilisateur unUtilisateur = new Utilisateur(login, service, info[2], hash);
             
             
             if (info[0] == 0) {
@@ -147,6 +149,7 @@ public class Authentification extends javax.swing.JFrame {
                         this.dispose();
                         break;
                     default:
+                        System.out.println(unUtilisateur.getService().getLibelle());
                         new AfficherDemandes(false, unUtilisateur).setVisible(true);
                         this.dispose();
                         break;
