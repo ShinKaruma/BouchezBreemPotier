@@ -139,9 +139,13 @@ public class DemandeDAO extends DAO<Demande>{
         }
         ArrayList<Demande> lesDemandes = new ArrayList<Demande>();
         try {
-            Statement state = pdo.createStatement();
-            String requete = "SELECT * FROM demande where idservice="+idService;
-            ResultSet demandeResultat = state.executeQuery(requete);
+            String requete = "SELECT * FROM demande where idservice=?";
+            PreparedStatement prepare = pdo.prepareStatement(requete);
+            
+            prepare.setInt(1, idService);
+            
+            
+            ResultSet demandeResultat = prepare.executeQuery();
 
             while (demandeResultat.next()) {
                 int idD = demandeResultat.getInt(1);
@@ -152,7 +156,7 @@ public class DemandeDAO extends DAO<Demande>{
                 lesDemandes.add(uneDemande);
             }
             demandeResultat.close();
-            state.close();
+            prepare.close();
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Aucune Demande ou id");
