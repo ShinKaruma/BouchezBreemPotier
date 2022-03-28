@@ -13,7 +13,6 @@ public class AfficherCommande extends javax.swing.JFrame {
     public AfficherCommande() {
         
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         DAO.Connection();
         uneCommande = CommandeDAO.donnerToutesLesCommandes();

@@ -52,7 +52,7 @@ public class AjouterMedicament extends javax.swing.JFrame {
         txtSeuil = new javax.swing.JTextField();
         lblIdAfficher = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 51, 51));

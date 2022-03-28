@@ -23,7 +23,7 @@ public class AfficherDemandes extends javax.swing.JFrame {
     public AfficherDemandes(boolean pharmacien, Utilisateur unUser) {
         this.unUser = unUser;
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
         
         passerelleDemande.Connection();
         initComponents();
@@ -64,6 +64,7 @@ public class AfficherDemandes extends javax.swing.JFrame {
         btnDeconnexion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnModifier = new javax.swing.JButton();
+        btnActualiser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +127,18 @@ public class AfficherDemandes extends javax.swing.JFrame {
             }
         });
 
+        btnActualiser.setText("Actualiser");
+        btnActualiser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualiserMouseClicked(evt);
+            }
+        });
+        btnActualiser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualiserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,16 +160,18 @@ public class AfficherDemandes extends javax.swing.JFrame {
                 .addComponent(btnValider)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(162, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(241, 241, 241))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnActualiser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModifier)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCreerDemande)
-                        .addGap(227, 227, 227))))
+                        .addGap(198, 198, 198))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +183,8 @@ public class AfficherDemandes extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreerDemande)
-                    .addComponent(btnModifier))
+                    .addComponent(btnModifier)
+                    .addComponent(btnActualiser))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnValider)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
@@ -232,6 +248,20 @@ public class AfficherDemandes extends javax.swing.JFrame {
         new CreationDeDemande(unUser, laDemande).setVisible(true);
     }//GEN-LAST:event_btnModifierMouseClicked
 
+    private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
+        uneDemande = passerelleDemande.findAll();
+
+        DefaultListModel listModel = new DefaultListModel();
+        for (Demande dmd : passerelleDemande.findAll()) {
+            listModel.addElement(dmd);
+        }
+        lstDemandes.setModel(listModel);
+    }//GEN-LAST:event_btnActualiserMouseClicked
+
+    private void btnActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualiserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualiserActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -271,6 +301,7 @@ public class AfficherDemandes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualiser;
     private javax.swing.JButton btnCreerDemande;
     private javax.swing.JButton btnDeconnexion;
     private javax.swing.JButton btnFermer;

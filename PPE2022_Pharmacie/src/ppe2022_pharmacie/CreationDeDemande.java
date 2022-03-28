@@ -30,7 +30,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
     public CreationDeDemande(Utilisateur unUser) {
         idService = unUser.getService().getIdService();
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         btnModifier.setVisible(false);
         DefaultComboBoxModel<Medicament> lisModel = new DefaultComboBoxModel<>();
@@ -47,7 +46,6 @@ public class CreationDeDemande extends javax.swing.JFrame {
         idService = unUser.getService().getIdService();
         idDemande = uneDemande.getIdD();
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         DefaultComboBoxModel<Medicament> lisModel = new DefaultComboBoxModel<>();
         btnV.setVisible(false);
@@ -79,7 +77,7 @@ public class CreationDeDemande extends javax.swing.JFrame {
         lblService = new javax.swing.JLabel();
         btnModifier = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Création d'une Demande");
 
@@ -194,15 +192,15 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
     private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
         // TODO add your handling code here:
-        String SidMed = txtQtte.getText();
+        Medicament med = (Medicament) cbxMedicament.getSelectedItem();
+        int idMed = med.getId();
         String Sqtte = txtQtte.getText();
 
         int idServ = idService;
-        int idMed = Integer.parseInt(SidMed);
 
         int qtte = Integer.parseInt(Sqtte);
 
-        Demande uneDemande = new Demande(1, idServ, idMed, qtte);
+        Demande uneDemande = new Demande(12, idServ, idMed, qtte);
 
         passerelleDemande.create(uneDemande);
         JOptionPane.showMessageDialog(null, "Demande créée");
@@ -243,11 +241,11 @@ public class CreationDeDemande extends javax.swing.JFrame {
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
         // TODO add your handling code here:
-        String SidMed = txtQtte.getText();
+        Medicament med = (Medicament) cbxMedicament.getSelectedItem();
+        int idMed = med.getId();
         String Sqtte = txtQtte.getText();
 
         int idServ = idService;
-        int idMed = Integer.parseInt(SidMed);
 
         int qtte = Integer.parseInt(Sqtte);
 

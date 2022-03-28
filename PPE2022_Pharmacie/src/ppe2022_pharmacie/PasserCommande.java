@@ -10,7 +10,6 @@ public class PasserCommande extends javax.swing.JFrame {
     public PasserCommande(Medicament unPdt) {
 
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         DAO.Connection();
         
@@ -68,7 +67,7 @@ public class PasserCommande extends javax.swing.JFrame {
         lblId1.setText("ID :");
         lblId1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblTitre.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblTitre.setForeground(new java.awt.Color(255, 51, 51));

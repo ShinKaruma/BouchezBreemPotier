@@ -21,7 +21,6 @@ public class AfficherLesUsers extends javax.swing.JFrame {
     public AfficherLesUsers() {
         
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         passerelleUser.Connection();
 
@@ -194,13 +193,17 @@ public class AfficherLesUsers extends javax.swing.JFrame {
             Object val = lstUser.getModel().getElementAt(choix);
             Utilisateur unUser = (Utilisateur) val;
 
-            new AjouterUtilisateur(unUser).setVisible(true);
+            new AjouterUtilisateur(unUser,this).setVisible(true);
 
             DefaultListModel listModel = new DefaultListModel();
             for (Utilisateur u : passerelleUser.findAll()) {
                 listModel.addElement(u);
             }
-            lstUser.setModel(listModel);
+        DefaultListModel listeModel = new DefaultListModel();
+        for (Utilisateur u : passerelleUser.findAll()) {
+            listeModel.addElement(u);
+        }
+            lstUser.setModel(listeModel);
         } else {
             lblOutput.setText("aucun utilisateur n'a été choisi");
         }

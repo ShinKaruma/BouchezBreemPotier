@@ -6,7 +6,8 @@
 package ppe2022_pharmacie;
 
 import java.security.MessageDigest;
-import javax.swing.JFrame;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -17,6 +18,7 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
 
     private static final UtilisateurDAO passerelleUser = new UtilisateurDAO();
     private static final ServiceDAO passerelleService = new ServiceDAO();
+    private AfficherLesUsers frameuser;
 
     /**
      * Creates new form AjouterUtilisateur
@@ -24,7 +26,6 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     public AjouterUtilisateur() {
 
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         btnModifier.setVisible(false);
         lblId.setVisible(false);
@@ -39,9 +40,23 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
     public AjouterUtilisateur(Utilisateur unUser) {
 
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
         initComponents();
+        btnValider.setVisible(false);
+        lblOutputID.setText(String.valueOf(unUser.getIdUser()));
+        passerelleUser.Connection();
+        txtLogin.setText(unUser.getLogin());
+
+        for (Service s : passerelleService.findAll()) {
+            cbxService.addItem(s.getLibelle());
+        }
+
+        cbxService.setSelectedItem(unUser.getService());
+    }
+    public AjouterUtilisateur(Utilisateur unUser,AfficherLesUsers frameuser) {
+
+        this.setResizable(false);
+        initComponents();
+        this.frameuser=frameuser;
         btnValider.setVisible(false);
         lblOutputID.setText(String.valueOf(unUser.getIdUser()));
         passerelleUser.Connection();
@@ -78,7 +93,7 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
 
         jButton3.setText("jButton3");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblPasse.setText("Login");
 
@@ -208,7 +223,8 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
         Utilisateur unUser = new Utilisateur(login, new Service(idService,service), 2, hash);
         
         passerelleUser.create(unUser);
-        
+        JOptionPane.showMessageDialog(null, "Utilisateur créé");
+        dispose(); 
         }catch(Exception e){
             System.out.println(e);
         }
@@ -238,8 +254,15 @@ public class AjouterUtilisateur extends javax.swing.JFrame {
 
         Utilisateur unUser = new Utilisateur(login, new Service(idService,service), idUser, hash);
         
-        System.out.println("modifié");
         passerelleUser.update(unUser);
+        DefaultListModel listModel = new DefaultListModel();
+        for (Utilisateur u : passerelleUser.findAll()) {
+            listModel.addElement(u);
+        }
+        
+        JOptionPane.showMessageDialog(null, "Utilisateur Modifié");
+        dispose();
+
     }//GEN-LAST:event_btnModifierMouseClicked
 
     /**
